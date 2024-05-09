@@ -1,0 +1,24 @@
+.catalog {
+  display: flex;
+  justify-content: start;
+  flex-direction: row;
+  margin: 30px 30px 30px 150px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 30px 30px 30px 150px;
+}
+
+.container {
+  position: sticky;
+  top: 0;
+  width: 180px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5%;
+}
