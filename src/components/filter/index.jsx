@@ -58,7 +58,7 @@ export const DefaultFilter = ({ setCriteria }) => {
             <FormControl fullWidth margin="normal">
                 <TextField
                     name="minPrice"
-                    label="Min Price (₴)"
+                    label="Min Price"
                     type="number"
                     value={filter.minPrice}
                     onChange={handleFilterChange}
@@ -68,7 +68,7 @@ export const DefaultFilter = ({ setCriteria }) => {
             <FormControl fullWidth margin="normal">
                 <TextField
                     name="maxPrice"
-                    label="Max Price (₴)"
+                    label="Max Price"
                     type="number"
                     value={filter.maxPrice}
                     onChange={handleFilterChange}
@@ -101,14 +101,14 @@ export const DefaultFilter = ({ setCriteria }) => {
                 <Button variant="contained" onClick={handleApplyFilter}
                         sx={{ backgroundColor: 'var(--secondary-dark-color)',
                             '&:hover': { backgroundColor: 'var(--primary-element-color)' },
-                            width: '200px'  // Set a static width
+                            width: '200px'
                         }}>
                     Apply
                 </Button>
                 <Button variant="contained" onClick={handleResetFilter}
                         sx={{ ml: 2, backgroundColor: 'var(--reset-element-color)',
                             '&:hover': { backgroundColor: 'var(--primary-element-color)' },
-                            width: '200px'  // Set a static width
+                            width: '200px'
                         }}>
                     Reset
                 </Button>
