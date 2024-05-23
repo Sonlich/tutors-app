@@ -1,19 +1,7 @@
 import React, {useState} from 'react';
-import {Field, FieldArray, Form, Formik} from 'formik';
+import {Field, Form, Formik} from 'formik';
 import * as yup from 'yup';
-import {
-    Autocomplete,
-    Avatar,
-    Button,
-    Container,
-    FormControl,
-    Grid,
-    InputLabel,
-    MenuItem,
-    Select,
-    TextField,
-    Typography
-} from '@mui/material';
+import {Avatar, Button, Container, Grid, TextField, Typography} from '@mui/material';
 import {PasswordField} from "../login-forms";
 import {DesktopDatePicker} from '@mui/x-date-pickers/DesktopDatePicker';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
@@ -24,27 +12,56 @@ import dayjs from "dayjs";
 const descriptionSchema = yup.string()
     .max(200, 'Description must be at most 200 characters')
 
-export const RegistrationForm = () => {
-    const [role, setRole] = useState('student')
+
+export const EditProfileForm = () => {
+    let user = {
+        id: 1,
+        role: 'tutor',
+        firstName: 'Karl',
+        lastName: 'Smith',
+        photo: 'https://picsum.photos/400/300?random=1',
+        description: 'User description',
+        birthDate: '1991-07-28',
+        email: 'karl11@example.com',
+        contact: '+38096573839',
+        password: 'password12',
+        tutorSubject: [
+            {
+                id: 1,
+                name: 'Mathematics',
+                pricePerLesson: 450,
+                experienceSince: '2017-10-22',
+            },
+            {
+                id: 2,
+                name: 'Physics',
+                pricePerLesson: 300,
+                experienceSince: '2018-09-23',
+            }
+        ],
+        lessons: [
+            {date: '2024-05-29', startTime: '10:00', endTime: '11:00'},
+            {date: '2024-05-30', startTime: '12:00', endTime: '13:00'}
+        ],
+    };
+
     const initialValues = {
-        firstName: '',
-        lastName: '',
-        profilePhoto: null,
-        birthDate: null,
-        description: '',
-        contact: '',
-        email: '',
-        password: '',
-        role: 'student',
-        subjects: []
+        role: user.role,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        profilePhoto: user.photo,
+        birthDate: user.birthDate,
+        description: user.description,
+        contact: user.contact,
+        email: user.email,
+        password: user.password,
     };
 
     const registrationValidationSchema = yup.object({
-        role: yup.string().required('Role is required'),
         firstName: yup.string().required('First name is required'),
         lastName: yup.string().required('Last name is required'),
-        profilePhoto: role === 'student' ? yup.mixed().nullable() : yup.mixed().required('Profile photo is required for tutors'),
-        description: role === 'student' ? descriptionSchema : descriptionSchema.required('Description is required'),
+        profilePhoto: initialValues.role === 'student' ? yup.mixed().nullable() : yup.mixed().required('Profile photo is required for tutors'),
+        description: initialValues.role === 'student' ? descriptionSchema : descriptionSchema.required('Description is required'),
         birthDate: yup.date().max(new Date(), "Birth date must be in the past").required('Birth date is required'),
         contact: yup.string()
             .required('Contact is required')
@@ -53,26 +70,23 @@ export const RegistrationForm = () => {
                 'Contact number must be valid'
             ),
         email: yup.string().email('Enter a valid email').required('Email is required'),
-        password: yup.string()
+        oldPassword: yup.string()
+            .required('Old password is required')
+            .test('is-correct', 'Old password is incorrect', function (value) {
+                return value === user.password;
+            }),
+        newPassword: yup.string()
             .min(6, 'Password should be minimum 6 characters')
             .matches(/\d/, 'Password should contain at least one number')
-            .required('Password is required'),
-        subjects: yup.array().of(
-            yup.object({
-                subject: yup.string().required('Subject is required'),
-                experienceSince: yup.date().max(new Date(), "Date must be in the past").required('Experience date is required'),
-                price: yup.number().min(0, "Price must be non-negative").required('Price per lesson is required')
-            })
-        ).when('role', (role, schema) => role === 'tutor' ? schema.required() : schema.notRequired())
+            .required('New password is required'),
     });
 
-    const availableSubjects = ["Mathematics", "English", "Chemistry"];
+    const [photoPreview, setPhotoPreview] = useState(initialValues.profilePhoto);
+    const [isChangingPassword, setIsChangingPassword] = useState(false);
 
-    const isSubjectAdded = (selectedSubjects, currentSubject) => {
-        return selectedSubjects.includes(currentSubject);
+    const handlePasswordChangeClick = () => {
+        setIsChangingPassword(!isChangingPassword);
     };
-
-    const [photoPreview, setPhotoPreview] = useState(null);
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns} locale={enUS}>
@@ -118,7 +132,7 @@ export const RegistrationForm = () => {
 
                         return (
                             <Form onSubmit={handleSubmit} noValidate>
-                                <h1>Register</h1>
+                                <h1>Edit Profile</h1>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
                                         {photoPreview ? (
@@ -181,43 +195,12 @@ export const RegistrationForm = () => {
                                                 )}
                                             </Field>
                                         )}
-                                        <Grid item xs={12}>
-                                            <FormControl fullWidth>
-                                                <InputLabel id="role-select-label">Register as</InputLabel>
-                                                <Select
-                                                    labelId="role-select-label"
-                                                    id="role"
-                                                    name="role"
-                                                    value={values.role}
-                                                    label="Register as"
-                                                    onChange={e => {
-                                                        handleChange(e);
-                                                        setRole(e.target.value)
-                                                        setFieldValue("subjects", e.target.value === "tutor" ? [{
-                                                            subject: '',
-                                                            experienceSince: null,
-                                                            price: ''
-                                                        }] : []);
-                                                    }}
-                                                    onBlur={handleBlur}
-                                                    error={touched.role && Boolean(errors.role)}
-                                                >
-                                                    <MenuItem value="student">Student</MenuItem>
-                                                    <MenuItem value="tutor">Tutor</MenuItem>
-                                                </Select>
-                                                {touched.role && errors.role && (
-                                                    <Typography variant="caption" display="block" color="error"
-                                                                sx={{mt: 1, ml: 1.5}}>
-                                                        {errors.role}
-                                                    </Typography>
-                                                )}
-                                            </FormControl>
-                                        </Grid>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField
                                             id="firstName"
                                             name="firstName"
+                                            value={values.firstName}
                                             label="First Name"
                                             variant="outlined"
                                             fullWidth
@@ -231,6 +214,7 @@ export const RegistrationForm = () => {
                                         <TextField
                                             id="lastName"
                                             name="lastName"
+                                            value={values.lastName}
                                             label="Last Name"
                                             variant="outlined"
                                             fullWidth
@@ -273,6 +257,7 @@ export const RegistrationForm = () => {
                                         <TextField
                                             id="description"
                                             name="description"
+                                            value={values.description}
                                             label="Description"
                                             variant="outlined"
                                             fullWidth
@@ -288,6 +273,7 @@ export const RegistrationForm = () => {
                                         <TextField
                                             id="contact"
                                             name="contact"
+                                            value={values.contact}
                                             label="Contact"
                                             variant="outlined"
                                             fullWidth
@@ -301,6 +287,7 @@ export const RegistrationForm = () => {
                                         <TextField
                                             id="email"
                                             name="email"
+                                            value={values.email}
                                             label="Email"
                                             variant="outlined"
                                             fullWidth
@@ -310,129 +297,48 @@ export const RegistrationForm = () => {
                                             helperText={touched.email && errors.email}
                                         />
                                     </Grid>
+                                    {isChangingPassword ? (
+                                        <>
+                                            <Grid item xs={12}>
+                                                <PasswordField name="oldPassword" label="Old Password"/>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <PasswordField name="newPassword" label="New Password"/>
+                                            </Grid>
+                                        </>
+                                    ) : null}
                                     <Grid item xs={12}>
-                                        <PasswordField name="password" label="Password"/>
-                                    </Grid>
-                                    {values.role === 'tutor' && (
-                                        <FieldArray name="subjects">
-                                            {({push, remove}) => (
-                                                <>
-                                                    {values.subjects.map((subject, index) => (
-                                                        <React.Fragment key={index}>
-                                                            <Grid item xs={12} sm={6}>
-                                                                <FormControl fullWidth>
-                                                                    <Autocomplete
-                                                                        disablePortal
-                                                                        id={`subject-autocomplete-${index}`}
-                                                                        options={availableSubjects.filter(subject => !isSubjectAdded(values.subjects.map(sub => sub.subject), subject))}
-                                                                        value={subject.subject}
-                                                                        onChange={(event, newValue) => {
-                                                                            setFieldValue(`subjects[${index}].subject`, newValue);
-                                                                        }}
-                                                                        onBlur={() => setFieldTouched(`subjects[${index}].subject`, true)}
-                                                                        renderInput={(params) => (
-                                                                            <TextField
-                                                                                {...params}
-                                                                                label="Select Subject"
-                                                                                error={touched.subjects?.[index]?.subject && Boolean(errors.subjects?.[index]?.subject)}
-                                                                                helperText={touched.subjects?.[index]?.subject && errors.subjects?.[index]?.subject}
-                                                                            />
-                                                                        )}
-                                                                    />
-                                                                </FormControl>
-                                                            </Grid>
-                                                            <Grid item xs={12} sm={6}>
-                                                                <DesktopDatePicker
-                                                                    label="Experience since"
-                                                                    inputFormat="DD/MM/YYYY"
-                                                                    value={subject.experienceSince ? dayjs(subject.experienceSince, "YYYY-MM-DD").toDate() : null}
-                                                                    onChange={date => {
-                                                                        setFieldValue(`subjects[${index}].experienceSince`, date ? dayjs(date).format("YYYY-MM-DD") : null);
-                                                                        setFieldTouched(`subjects[${index}].experienceSince`, true, false);
-                                                                    }}
-                                                                    sx={(theme) => ({
-                                                                        width: '100%',
-                                                                        ...(touched.subjects?.[index]?.experienceSince && errors.subjects?.[index]?.experienceSince && {
-                                                                            label: {
-                                                                                color: theme.palette.error.main,
-                                                                            },
-                                                                            fieldset: {
-                                                                                borderColor: theme.palette.error.main,
-                                                                            },
-                                                                        }),
-                                                                    })}
-                                                                    maxDate={new Date()}
-                                                                    error={touched.subjects?.[index]?.experienceSince && Boolean(errors.subjects?.[index]?.experienceSince)}
-                                                                />
-                                                                {touched.subjects?.[index]?.experienceSince && errors.subjects?.[index]?.experienceSince && (
-                                                                    <Typography variant="caption" display="block"
-                                                                                color="error" sx={{mt: 1, ml: 1.5}}>
-                                                                        {errors.subjects?.[index]?.experienceSince}
-                                                                    </Typography>
-                                                                )}
-                                                            </Grid>
-                                                            <Grid item xs={12}>
-                                                                <TextField
-                                                                    name={`subjects[${index}].price`}
-                                                                    label="Price per lesson"
-                                                                    type="number"
-                                                                    fullWidth
-                                                                    onChange={handleChange}
-                                                                    onBlur={handleBlur}
-                                                                    error={touched.subjects?.[index]?.price && Boolean(errors.subjects?.[index]?.price)}
-                                                                    helperText={touched.subjects?.[index]?.price && errors.subjects?.[index]?.price}
-                                                                />
-                                                            </Grid>
-                                                            <Grid item xs={12}>
-                                                                <Button
-                                                                    onClick={() => remove(index)}
-                                                                    fullWidth
-                                                                    variant="contained"
-                                                                    disabled={values.subjects.length <= 1}
-                                                                    sx={{
-                                                                        backgroundColor: 'var( --cancel-element-color)',
-                                                                        '&:hover': {backgroundColor: 'var(--cancel-secondary-color)'}
-                                                                    }}
-                                                                >
-                                                                    Delete Subject
-                                                                </Button>
-                                                            </Grid>
-                                                        </React.Fragment>
-                                                    ))}
-                                                    <Grid item xs={12}>
-                                                        <Button
-                                                            onClick={() => push({
-                                                                subject: '',
-                                                                experienceSince: null,
-                                                                price: ''
-                                                            })}
-                                                            fullWidth
-                                                            variant="contained"
-                                                            sx={{
-                                                                backgroundColor: 'var(--reset-element-color)',
-                                                                '&:hover': {backgroundColor: 'var(--primary-element-color)'}
-                                                            }}
-                                                        >
-                                                            Add Subject
-                                                        </Button>
-                                                    </Grid>
-                                                </>
-                                            )}
-                                        </FieldArray>
-                                    )}
-                                    <Grid item xs={12}>
+                                        <Button
+                                            type="button"
+                                            variant="contained"
+                                            fullWidth
+                                            sx={isChangingPassword ?
+                                                {
+                                                    mb: 1.5,
+                                                    backgroundColor: 'var( --cancel-element-color)',
+                                                    '&:hover': {backgroundColor: 'var(--cancel-secondary-color)'}
+                                                } :
+                                                {
+                                                    mb: 1.5,
+                                                    backgroundColor: 'var(--reset-element-color)',
+                                                    '&:hover': {backgroundColor: 'var(--primary-element-color)'}
+                                                }
+                                            }
+                                            onClick={handlePasswordChangeClick}
+                                        >
+                                            {isChangingPassword ? 'Cancel Changing Password' : 'Change Password'}
+                                        </Button>
                                         <Button
                                             type="submit"
                                             variant="contained"
                                             disabled={isSubmitting}
                                             fullWidth
                                             sx={{
-                                                mb: 8,
-                                                backgroundColor: 'var(--secondary-dark-color)',
+                                                mb: 8, backgroundColor: 'var(--secondary-dark-color)',
                                                 '&:hover': {backgroundColor: 'var(--primary-element-color)'}
                                             }}
                                         >
-                                            Register
+                                            Confirm
                                         </Button>
                                     </Grid>
                                 </Grid>

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import styles from './styles.module.scss';
-import { users } from "../../mockData";
-import { TutorCard } from "../../components/tutor-card";
-import { DefaultFilter } from "../../components/filter";
+import {users} from "../../mockData";
+import {TutorCard} from "../../components/cards/tutor-card";
+import {DefaultFilter} from "../../components/filter";
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 export const HomePage = () => {
     const [criteria, setCriteria] = useState({
@@ -12,17 +14,33 @@ export const HomePage = () => {
         timeSlots: []
     });
 
+    const [page, setPage] = useState(1);
+    const tutorsPerPage = 6;
+
+    const tutors = users.filter(user => user.role === 'tutor' && applyCriteria(user, criteria));
+    const count = Math.ceil(tutors.length / tutorsPerPage);
+    const displayedTutors = tutors.slice((page - 1) * tutorsPerPage, page * tutorsPerPage);
+
+    const handleChange = (event, value) => {
+        setPage(value);
+    };
+
     return (
-        <div className={styles.catalog}>
-            <div className={styles.container}>
-                <DefaultFilter setCriteria={setCriteria} />
+        <>
+            <div className={styles.catalog}>
+                <div className={styles.container}>
+                    <DefaultFilter setCriteria={setCriteria}/>
+                </div>
+                <div className={styles.cards}>
+                    {displayedTutors.map(tutor => (
+                        <TutorCard key={tutor.id} tutor={tutor}/>
+                    ))}
+                </div>
             </div>
-            <div className={styles.cards}>
-                {users.filter(user => applyCriteria(user, criteria)).map(tutor => (
-                    <TutorCard key={tutor.id} tutor={tutor} />
-                ))}
-            </div>
-        </div>
+            <Stack spacing={2} alignItems="center" sx={{marginY: 3}}>
+                <Pagination count={count} page={page} onChange={handleChange}/>
+            </Stack>
+        </>
     );
 };
 
@@ -48,6 +66,3 @@ function applyCriteria(tutor, criteria) {
 
     return subjectMatch && priceMatch && timeSlotMatch;
 }
-
-
-

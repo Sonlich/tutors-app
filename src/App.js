@@ -6,11 +6,11 @@ import {Pages} from "./pages";
 
 function App() {
 
-  return (
-          <BrowserRouter>
-              <Pages />
-          </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <Pages/>
+        </BrowserRouter>
+    );
 }
 
 export default App;

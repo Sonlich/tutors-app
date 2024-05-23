@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Card, CardContent, CardMedia, Typography, Button } from '@mui/material';
+import {Button, Card, CardContent, CardMedia, Typography} from '@mui/material';
 import ClassIcon from '@mui/icons-material/Class';
 import PersonIcon from '@mui/icons-material/Person';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -15,7 +15,7 @@ export const TutorCard = ({tutor}) => {
     const age = dayjs().diff(tutor.birthDate, 'year');
 
     return (
-        <Card sx={{ maxWidth: 400, m: 2 }}>
+        <Card sx={{width: 400, height: 720, m: 2}}>
             <CardMedia
                 component="img"
                 height="300"
@@ -26,34 +26,36 @@ export const TutorCard = ({tutor}) => {
                 <Typography gutterBottom variant="h5" component="div">
                     {tutor.firstName} {tutor.lastName}
                 </Typography>
-                <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
-                    <PersonIcon fontSize="inherit" sx={{ verticalAlign: "middle", mr: 0.5 }} />
+                <Typography variant="body1" color="text.secondary" sx={{mt: 2}}>
+                    <PersonIcon fontSize="inherit" sx={{verticalAlign: "middle", mr: 0.5}}/>
                     Age: {age}
                 </Typography>
                 {tutor.tutorSubject.map((subject) => (
                     <React.Fragment key={subject.id}>
-                        <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
-                            <ClassIcon fontSize="inherit" sx={{ verticalAlign: "middle", mr: 0.5 }} />
+                        <Typography variant="body1" color="text.secondary" sx={{mt: 1}}>
+                            <ClassIcon fontSize="inherit" sx={{verticalAlign: "middle", mr: 0.5}}/>
                             {subject.name} - Since {dayjs(subject.experienceSince).format('MMMM YYYY')}
                         </Typography>
-                        <Typography variant="body1" color="text.secondary" sx={{ pl: 3, mt: 0.5 }}>
-                            <AttachMoneyIcon fontSize="inherit" sx={{ verticalAlign: "middle", mr: 0.5 }} />
+                        <Typography variant="body1" color="text.secondary" sx={{pl: 3, mt: 0.5}}>
+                            <AttachMoneyIcon fontSize="inherit" sx={{verticalAlign: "middle", mr: 0.5}}/>
                             {subject.pricePerLesson} ₴/lesson
                         </Typography>
                     </React.Fragment>
                 ))}
-                <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
+                <Typography variant="body1" color="text.secondary" sx={{mt: 2, height: 100, overflow: 'auto'}}>
                     {tutor.description}
                 </Typography>
             </CardContent>
-            <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
+            <CardContent sx={{display: 'flex', justifyContent: 'center'}}>
                 <Button onClick={handleOpen} variant="contained"
-                        sx={{ backgroundColor: 'var(--secondary-dark-color)',
-                            '&:hover': { backgroundColor: 'var(--primary-element-color)' } }}>
+                        sx={{
+                            backgroundColor: 'var(--secondary-dark-color)',
+                            '&:hover': {backgroundColor: 'var(--primary-element-color)'}
+                        }}>
                     Sign up for a lesson
                 </Button>
             </CardContent>
-            <LessonDialog open={open} onClose={handleClose} lessons={tutor.lessons} />
+            <LessonDialog open={open} onClose={handleClose} lessons={tutor.lessons} tutorSubjects={tutor.tutorSubject}/>
         </Card>
     )
 }

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {TextField, MenuItem, FormControl, InputLabel, Select, Button, Chip, OutlinedInput, Box} from '@mui/material';
+import React, {useState} from 'react';
+import {Box, Button, Chip, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField} from '@mui/material';
 
 const subjects = [
     "Mathematics", "Physics", "English", "German", "Chemistry", "Biology", "History",
@@ -10,7 +10,7 @@ const timeSlots = [
     "00:00-6:00", "6:00-12:00", "12:00-18:00", "18:00-24:00"
 ];
 
-export const DefaultFilter = ({ setCriteria }) => {
+export const DefaultFilter = ({setCriteria}) => {
     const initialFilterState = {
         subject: '',
         minPrice: '',
@@ -21,13 +21,13 @@ export const DefaultFilter = ({ setCriteria }) => {
     const [filter, setFilter] = useState(initialFilterState);
 
     const handleFilterChange = (event) => {
-        const { name, value } = event.target;
-        setFilter(prev => ({ ...prev, [name]: value }));
+        const {name, value} = event.target;
+        setFilter(prev => ({...prev, [name]: value}));
     };
 
     const handleTimeSlotChange = (event) => {
         const value = event.target.value;
-        setFilter(prev => ({ ...prev, timeSlots: typeof value === 'string' ? value.split(',') : value }));
+        setFilter(prev => ({...prev, timeSlots: typeof value === 'string' ? value.split(',') : value}));
     };
 
     const handleApplyFilter = () => {
@@ -81,11 +81,11 @@ export const DefaultFilter = ({ setCriteria }) => {
                     multiple
                     value={filter.timeSlots}
                     onChange={handleTimeSlotChange}
-                    input={<OutlinedInput id="select-multiple-chip" label="Time Slot" />}
+                    input={<OutlinedInput id="select-multiple-chip" label="Time Slot"/>}
                     renderValue={(selected) => (
                         <div>
                             {selected.map(value => (
-                                <Chip key={value} label={value} />
+                                <Chip key={value} label={value}/>
                             ))}
                         </div>
                     )}
@@ -99,15 +99,17 @@ export const DefaultFilter = ({ setCriteria }) => {
             </FormControl>
             <Box display="flex" justifyContent="center" mt={2}>
                 <Button variant="contained" onClick={handleApplyFilter}
-                        sx={{ backgroundColor: 'var(--secondary-dark-color)',
-                            '&:hover': { backgroundColor: 'var(--primary-element-color)' },
+                        sx={{
+                            backgroundColor: 'var(--secondary-dark-color)',
+                            '&:hover': {backgroundColor: 'var(--primary-element-color)'},
                             width: '200px'
                         }}>
                     Apply
                 </Button>
                 <Button variant="contained" onClick={handleResetFilter}
-                        sx={{ ml: 2, backgroundColor: 'var(--reset-element-color)',
-                            '&:hover': { backgroundColor: 'var(--primary-element-color)' },
+                        sx={{
+                            ml: 2, backgroundColor: 'var(--reset-element-color)',
+                            '&:hover': {backgroundColor: 'var(--primary-element-color)'},
                             width: '200px'
                         }}>
                     Reset

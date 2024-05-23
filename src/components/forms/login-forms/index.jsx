@@ -1,7 +1,18 @@
-import React, { useState } from 'react';
-import { Formik, Form, useField } from 'formik';
+import React, {useState} from 'react';
+import {Form, Formik, useField} from 'formik';
 import * as yup from 'yup';
-import { TextField, Button, InputLabel, OutlinedInput, InputAdornment, IconButton, FormControl, Grid, Typography, Container } from '@mui/material';
+import {
+    Button,
+    Container,
+    FormControl,
+    Grid,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    OutlinedInput,
+    TextField,
+    Typography
+} from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
@@ -10,18 +21,18 @@ const validationSchema = yup.object({
     password: yup.string('Enter your password').required('Password is required'),
 });
 
-export const PasswordField = () => {
-    const [field, meta] = useField('password');
+export const PasswordField = ({name, label}) => {
+    const [field, meta] = useField(name);
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
     return (
         <FormControl fullWidth variant="outlined" error={meta.touched && Boolean(meta.error)}>
-            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+            <InputLabel htmlFor={`outlined-adornment-${name}`}>{label}</InputLabel>
             <OutlinedInput
                 {...field}
-                id="outlined-adornment-password"
+                id={`outlined-adornment-${name}`}
                 type={showPassword ? 'text' : 'password'}
                 endAdornment={
                     <InputAdornment position="end">
@@ -31,14 +42,14 @@ export const PasswordField = () => {
                             onMouseDown={(event) => event.preventDefault()}
                             edge="end"
                         >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                            {showPassword ? <VisibilityOff/> : <Visibility/>}
                         </IconButton>
                     </InputAdornment>
                 }
-                label="Password"
+                label={name}
             />
             {meta.touched && meta.error && (
-                <Typography variant="caption" display="block" color="error" sx={{ mt: 1, ml: 1.5 }}>
+                <Typography variant="caption" display="block" color="error" sx={{mt: 1, ml: 1.5}}>
                     {meta.error}
                 </Typography>
             )}
@@ -48,16 +59,26 @@ export const PasswordField = () => {
 
 export const LoginForm = () => {
     return (
-        <Container component="main" maxWidth="xs" sx={{ display: 'flex', alignItems: 'center', height: '80vh' }}>
+        <Container
+            component="main"
+            maxWidth="xs"
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '80vh',
+            }}
+        >
             <Formik
-                initialValues={{ email: '', password: '' }}
+                initialValues={{email: '', password: ''}}
                 validationSchema={validationSchema}
-                onSubmit={(values, { setSubmitting }) => {
+                onSubmit={(values, {setSubmitting}) => {
                     console.log(values);
                     setSubmitting(false);
                 }}
             >
-                {({ handleChange, handleBlur, handleSubmit, isSubmitting, touched, errors }) => (
+                {({handleChange, handleBlur, handleSubmit, isSubmitting, touched, errors}) => (
                     <Form onSubmit={handleSubmit} noValidate>
                         <h1>Login</h1>
                         <Grid container spacing={2}>
@@ -75,7 +96,7 @@ export const LoginForm = () => {
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <PasswordField />
+                                <PasswordField name="password" label="Password"/>
                             </Grid>
                             <Grid item xs={12}>
                                 <Button
@@ -84,8 +105,10 @@ export const LoginForm = () => {
                                     color="primary"
                                     disabled={isSubmitting}
                                     fullWidth
-                                    sx={{ backgroundColor: 'var(--secondary-dark-color)',
-                                        '&:hover': { backgroundColor: 'var(--primary-element-color)' } }}
+                                    sx={{
+                                        backgroundColor: 'var(--secondary-dark-color)',
+                                        '&:hover': {backgroundColor: 'var(--primary-element-color)'}
+                                    }}
                                 >
                                     Login
                                 </Button>
