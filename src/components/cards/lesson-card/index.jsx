@@ -5,10 +5,12 @@ import TodayIcon from '@mui/icons-material/Today';
 import ClassIcon from '@mui/icons-material/Class';
 import PersonIcon from '@mui/icons-material/Person';
 import CallIcon from '@mui/icons-material/Call';
+import dayjs from 'dayjs';
 
 const LessonCard = ({lesson, onAccept, onCancel, showAcceptButton}) => {
     const [openModal, setOpenModal] = useState(false);
 
+    const formattedDate = dayjs(lesson.date).format('dddd, D MMMM HH:mm');
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
     const handleConfirmCancel = () => {
@@ -35,7 +37,7 @@ const LessonCard = ({lesson, onAccept, onCancel, showAcceptButton}) => {
                     <Typography color="textSecondary" sx={{textAlign: 'center'}}>
                         <TodayIcon fontSize="inherit" sx={{verticalAlign: "middle", mr: 0.5}}/>
                         Date <br/>
-                        {lesson.date} {lesson.time}
+                        {formattedDate}
                     </Typography>
                     <Typography color="textSecondary" sx={{textAlign: 'center'}}>
                         <ClassIcon fontSize="inherit" sx={{verticalAlign: "middle", mr: 0.5}}/>

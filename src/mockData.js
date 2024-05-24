@@ -24,10 +24,12 @@ export const users = [
             }
         ],
         lessons: [
-            {date: '2024-05-29T10:00', studentId: null, tutorId: 1, accepted: false, subjectId: null},
-            {date: '2024-05-30T12:00', studentId: null, tutorId: 1, accepted: false, subjectId: null},
-            {date: '2024-05-29T10:00', studentId: 8, tutorId: 1, accepted: true, subjectId: 1},
-            {date: '2024-05-30T12:00', studentId: 8, tutorId: 1, accepted: false, subjectId: 2},
+            {id: 1, date: '2024-05-29T10:00', studentId: null, tutorId: 1, accepted: false, subjectId: null},
+            {id: 2, date: '2024-05-30T12:00', studentId: null, tutorId: 1, accepted: false, subjectId: null},
+            {id: 3, date: '2024-05-29T10:00', studentId: 8, tutorId: 1, accepted: true, subjectId: 1},
+            {id: 4, date: '2024-05-30T12:00', studentId: 8, tutorId: 1, accepted: false, subjectId: 2},
+            {id: 22, date: '2024-06-01T09:00', studentId: 8, tutorId: 1, accepted: true, subjectId: 1},
+            {id: 23, date: '2024-06-02T13:00', studentId: 8, tutorId: 1, accepted: false, subjectId: 2},
         ],
     },
     {
@@ -55,9 +57,9 @@ export const users = [
             }
         ],
         lessons: [
-            {date: '2024-05-27T12:00', studentId: null, tutorId: 2, accepted: false, subjectId: null},
-            {date: '2024-05-28T13:00', studentId: null, tutorId: 2, accepted: false, subjectId: null},
-            {date: '2024-05-28T:12:00', studentId: null, tutorId: 2, accepted: false, subjectId: null}
+            {id: 5, date: '2024-05-27T12:00', studentId: null, tutorId: 2, accepted: false, subjectId: null},
+            {id: 6, date: '2024-05-28T13:00', studentId: null, tutorId: 2, accepted: false, subjectId: null},
+            {id: 7, date: '2024-05-28T:12:00', studentId: null, tutorId: 2, accepted: false, subjectId: null}
         ],
     },
     {
@@ -85,8 +87,8 @@ export const users = [
             }
         ],
         lessons: [
-            {date: '2024-05-28T13:00', studentId: null, tutorId: 3, accepted: false, subjectId: null},
-            {date: '2024-05-29T15:00', studentId: null, tutorId: 3, accepted: false, subjectId: null}
+            {id: 8, date: '2024-05-28T13:00', studentId: null, tutorId: 3, accepted: false, subjectId: null},
+            {id: 9, date: '2024-05-29T15:00', studentId: null, tutorId: 3, accepted: false, subjectId: null}
         ],
     },
     {
@@ -114,8 +116,8 @@ export const users = [
             }
         ],
         lessons: [
-            {date: '2024-05-29T15:00', studentId: null, tutorId: 4, accepted: false, subjectId: null},
-            {date: '2024-05-30T16:00', studentId: null, tutorId: 4, accepted: false, subjectId: null}
+            {id: 10, date: '2024-05-29T15:00', studentId: null, tutorId: 4, accepted: false, subjectId: null},
+            {id: 11, date: '2024-05-30T16:00', studentId: null, tutorId: 4, accepted: false, subjectId: null}
         ],
     },
     {
@@ -137,9 +139,9 @@ export const users = [
             }
         ],
         lessons: [
-            {date: '2024-05-29T09:00', studentId: null, tutorId: 5, accepted: false, subjectId: null},
-            {date: '2024-05-30T14:00', studentId: null, tutorId: 5, accepted: false, subjectId: null},
-            {date: '2024-05-30T11:00', studentId: null, tutorId: 5, accepted: false, subjectId: null}
+            {id: 12, date: '2024-05-29T09:00', studentId: null, tutorId: 5, accepted: false, subjectId: null},
+            {id: 13, date: '2024-05-30T14:00', studentId: null, tutorId: 5, accepted: false, subjectId: null},
+            {id: 14, date: '2024-05-30T11:00', studentId: null, tutorId: 5, accepted: false, subjectId: null}
         ],
     },
     {
@@ -161,8 +163,8 @@ export const users = [
             }
         ],
         lessons: [
-            {date: '2024-05-08T18:00', studentId: null, tutorId: 6, accepted: false, subjectId: null},
-            {date: '2024-05-09T:19:00', studentId: null, tutorId: 6, accepted: false, subjectId: null}
+            {id: 15, date: '2024-05-08T18:00', studentId: null, tutorId: 6, accepted: false, subjectId: null},
+            {id: 16, date: '2024-05-09T:19:00', studentId: null, tutorId: 6, accepted: false, subjectId: null}
         ],
     },
     {
@@ -184,9 +186,9 @@ export const users = [
             }
         ],
         lessons: [
-            {date: '2024-06-02T20:00', studentId: null, tutorId: 7, accepted: false, subjectId: null},
-            {date: '2024-06-03T:21:00', studentId: null, tutorId: 7, accepted: false, subjectId: null},
-            {date: '2024-06-03T:21:00', studentId: null, tutorId: 7, accepted: false, subjectId: null}
+            {id: 17, date: '2024-06-02T20:00', studentId: null, tutorId: 7, accepted: false, subjectId: null},
+            {id: 18, date: '2024-06-03T:21:00', studentId: null, tutorId: 7, accepted: false, subjectId: null},
+            {id: 19,date: '2024-06-03T:21:00', studentId: null, tutorId: 7, accepted: false, subjectId: null}
         ],
     },
     {
@@ -200,8 +202,8 @@ export const users = [
         email: 'mila@mail.com',
         contact: '+38096573839',
         lessons: [
-            {date: '2024-05-29T10:00', studentId: 8, tutorId: 1, accepted: true, subjectId: 1},
-            {date: '2024-05-30T12:00', studentId: 8, tutorId: 1, accepted: false, subjectId: 2},
+            {id: 20, date: '2024-05-29T10:00', studentId: 8, tutorId: 1, accepted: true, subjectId: 1},
+            {id: 21, date: '2024-05-30T12:00', studentId: 8, tutorId: 1, accepted: false, subjectId: 2},
         ],
     }
 ];
