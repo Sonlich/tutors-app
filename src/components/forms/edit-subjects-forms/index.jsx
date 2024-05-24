@@ -20,17 +20,17 @@ export const EditSubjectsForm = () => {
         birthDate: '1991-07-28',
         email: 'karl11@example.com',
         contact: '+38096573839',
-        tutorSubject: [
+        subjects: [
             {
                 id: 1,
                 name: 'Mathematics',
-                pricePerLesson: 450,
+                price: 450,
                 experienceSince: '2017-10-22',
             },
             {
                 id: 2,
                 name: 'Physics',
-                pricePerLesson: 300,
+                price: 300,
                 experienceSince: '2018-09-23',
             }
         ],
@@ -40,7 +40,7 @@ export const EditSubjectsForm = () => {
         ],
     };
     const initialValues = {
-        subjects: user.tutorSubject
+        subjects: user.subjects
     };
 
     const registrationValidationSchema = yup.object({
@@ -104,7 +104,7 @@ export const EditSubjectsForm = () => {
                                                                 <Autocomplete
                                                                     disablePortal
                                                                     id={`subject-autocomplete-${index}`}
-                                                                    options={availableSubjects.filter(subject => !isSubjectAdded(values.subjects.map(sub => sub.subject), subject))}
+                                                                    options={availableSubjects.filter(subject => !isSubjectAdded(values.subjects.map(sub => sub.name), subject))}
                                                                     value={subject.name}
                                                                     onChange={(event, newValue) => {
                                                                         setFieldValue(`subjects[${index}].subject`, newValue);
@@ -154,7 +154,7 @@ export const EditSubjectsForm = () => {
                                                         <Grid item xs={12}>
                                                             <TextField
                                                                 name={`subjects[${index}].price`}
-                                                                value={subject.pricePerLesson}
+                                                                value={subject.price}
                                                                 label="Price per lesson"
                                                                 type="number"
                                                                 fullWidth

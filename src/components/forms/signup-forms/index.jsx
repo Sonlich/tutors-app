@@ -59,7 +59,7 @@ export const RegistrationForm = () => {
             .required('Password is required'),
         subjects: yup.array().of(
             yup.object({
-                subject: yup.string().required('Subject is required'),
+                name: yup.string().required('Subject is required'),
                 experienceSince: yup.date().max(new Date(), "Date must be in the past").required('Experience date is required'),
                 price: yup.number().min(0, "Price must be non-negative").required('Price per lesson is required')
             })
@@ -194,7 +194,7 @@ export const RegistrationForm = () => {
                                                         handleChange(e);
                                                         setRole(e.target.value)
                                                         setFieldValue("subjects", e.target.value === "tutor" ? [{
-                                                            subject: '',
+                                                            name: '',
                                                             experienceSince: null,
                                                             price: ''
                                                         }] : []);
@@ -325,17 +325,17 @@ export const RegistrationForm = () => {
                                                                         disablePortal
                                                                         id={`subject-autocomplete-${index}`}
                                                                         options={availableSubjects.filter(subject => !isSubjectAdded(values.subjects.map(sub => sub.subject), subject))}
-                                                                        value={subject.subject}
+                                                                        value={subject.name}
                                                                         onChange={(event, newValue) => {
-                                                                            setFieldValue(`subjects[${index}].subject`, newValue);
+                                                                            setFieldValue(`subjects[${index}].name`, newValue);
                                                                         }}
-                                                                        onBlur={() => setFieldTouched(`subjects[${index}].subject`, true)}
+                                                                        onBlur={() => setFieldTouched(`subjects[${index}].name`, true)}
                                                                         renderInput={(params) => (
                                                                             <TextField
                                                                                 {...params}
                                                                                 label="Select Subject"
-                                                                                error={touched.subjects?.[index]?.subject && Boolean(errors.subjects?.[index]?.subject)}
-                                                                                helperText={touched.subjects?.[index]?.subject && errors.subjects?.[index]?.subject}
+                                                                                error={touched.subjects?.[index]?.name && Boolean(errors.subjects?.[index]?.name)}
+                                                                                helperText={touched.subjects?.[index]?.name && errors.subjects?.[index]?.name}
                                                                             />
                                                                         )}
                                                                     />
@@ -402,7 +402,7 @@ export const RegistrationForm = () => {
                                                     <Grid item xs={12}>
                                                         <Button
                                                             onClick={() => push({
-                                                                subject: '',
+                                                                name: '',
                                                                 experienceSince: null,
                                                                 price: ''
                                                             })}

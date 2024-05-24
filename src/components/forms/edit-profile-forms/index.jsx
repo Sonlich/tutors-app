@@ -25,7 +25,7 @@ export const EditProfileForm = () => {
         email: 'karl11@example.com',
         contact: '+38096573839',
         password: 'password12',
-        tutorSubject: [
+        subjects: [
             {
                 id: 1,
                 name: 'Mathematics',
