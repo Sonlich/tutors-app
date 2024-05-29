@@ -2,8 +2,8 @@ import { overfetch } from "../client";
 import { LOGIN_URL, SIGNUP_URL } from "../urls";
 
 const BASE_LOGIN_PARAMS = {
-  email: "oleg_pidoras@gmail.com",
-  password: "123123123",
+  email: "someuser@gmail.com",
+  password: "password1",
 };
 
 export const login = (params = BASE_LOGIN_PARAMS) =>

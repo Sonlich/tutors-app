@@ -55,14 +55,28 @@ function applyCriteria(tutor, criteria) {
         });
     }
 
-    let timeSlotMatch = criteria.timeSlots && criteria.timeSlots.length ? tutor.lessons.some(lesson => {
-        return criteria.timeSlots.some(slot => {
-            const [start, end] = slot.split('-');
-            const lessonStart = lesson.startTime;
-            const lessonEnd = lesson.endTime;
-            return (lessonStart >= start && lessonEnd <= end);
+    let timeSlotMatch = true;
+    if (criteria.timeSlots && criteria.timeSlots.length) {
+        timeSlotMatch = tutor.lessons.some(lesson => {
+            if (lesson.accepted) {
+                return false;
+            }
+            const lessonStart = new Date(lesson.date);
+            const lessonEnd = new Date(lesson.date);
+            lessonEnd.setHours(lessonEnd.getHours() + 1);
+
+            return criteria.timeSlots.some(slot => {
+                const [start, end] = slot.split('-').map(time => {
+                    const [hours, minutes] = time.split(':').map(Number);
+                    const date = new Date(lessonStart);
+                    date.setHours(hours, minutes, 0, 0);
+                    return date;
+                });
+
+                return (lessonStart >= start && lessonEnd <= end);
+            });
         });
-    }) : true;
+    }
 
     return subjectMatch && priceMatch && timeSlotMatch;
 }

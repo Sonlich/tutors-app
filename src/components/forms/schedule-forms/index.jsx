@@ -59,13 +59,13 @@ export default function WorkHours({ tutorId = 2 }) {
                 const endIndex = timeSlots.indexOf(dayConfig.endTime) - 1;
 
                 for (let index = startIndex; index <= endIndex; index++) {
-                    for (let weekOffset = 0; weekOffset <= 4; weekOffset++) {
+                    for (let weekOffset = 0; weekOffset <= 12; weekOffset++) {
                         const date = dayjs().add(weekOffset, 'week').day(daysOfWeek.indexOf(day)).hour(index).minute(0).second(0);
                         if (date.isAfter(dayjs())) {
                             newLessons.push({
                                 date: date.format('YYYY-MM-DDTHH:mm'),
                                 studentId: null,
-                                tutorId: tutorId,
+                                tutorId: 13,
                                 subjectId: null,
                                 accepted: false
                             });

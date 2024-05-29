@@ -11,34 +11,39 @@ import dayjs from "dayjs";
 export const EditSubjectsForm = () => {
     const [role, setRole] = useState('student')
     let user = {
-        id: 1,
+        id: 13,
         role: 'tutor',
-        firstName: 'Karl',
-        lastName: 'Smith',
-        photo: 'https://picsum.photos/400/300?random=1',
+        firstName: 'Igor',
+        lastName: 'Lagoda',
+        photo: 'https://img.freepik.com/free-photo/handsome-freelancer-man-holding-laptop-smiling-standing-happy-light-turquoise-wall_1258-23916.jpg?w=1380&t=st=1716652601~exp=1716653201~hmac=364a8852413178582a643ee7adf40dc947dc56008d8df0ac74fa6b06f3495896',
         description: 'User description',
-        birthDate: '1991-07-28',
-        email: 'karl11@example.com',
-        contact: '+38096573839',
+        birthDate: '1997-05-14',
+        email: 'igorlag@example.com',
+        contact: '+380955458637',
+        password: 'password1',
         subjects: [
             {
-                id: 1,
-                name: 'Mathematics',
-                price: 450,
-                experienceSince: '2017-10-22',
+                id: 15,
+                name: 'Physics',
+                price: 250,
+                experienceSince: '2023-05-23',
             },
             {
-                id: 2,
-                name: 'Physics',
+                id: 16,
+                name: 'Economics',
                 price: 300,
-                experienceSince: '2018-09-23',
+                experienceSince: '2021-01-23',
             }
         ],
         lessons: [
-            {date: '2024-05-29', startTime: '10:00', endTime: '11:00'},
-            {date: '2024-05-30', startTime: '12:00', endTime: '13:00'}
+            {id: 34, date: '2024-06-09T20:00', studentId: null, tutorId: 13, accepted: false, subjectId: null},
+            {id: 35, date: '2024-06-08T21:00', studentId: null, tutorId: 13, accepted: false, subjectId: null},
+            {id: 36,date: '2024-06-02T21:00', studentId: null, tutorId: 13, accepted: false, subjectId: null},
+            {id: 37, date: '2024-06-03T21:00', studentId: null, tutorId: 13, accepted: false, subjectId: null},
+            {id: 38, date: '2024-06-04T21:00', studentId: null, tutorId: 13, accepted: false, subjectId: null},
         ],
     };
+
     const initialValues = {
         subjects: user.subjects
     };

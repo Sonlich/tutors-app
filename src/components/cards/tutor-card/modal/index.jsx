@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
     Alert,
     Button,
@@ -13,63 +13,64 @@ import {
     Snackbar
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
-import {LocalizationProvider, StaticDatePicker} from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider, StaticDatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 
-const LessonDialog = ({open, onClose, lessons, tutorSubjects}) => {
+const LessonDialog = ({ open, onClose, lessons, tutorSubjects, studentId = 8, tutorId}) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [selectedSubject, setSelectedSubject] = useState(null);
-    const [alertInfo, setAlertInfo] = useState({show: false, message: '', severity: 'info'});
+    const [alertInfo, setAlertInfo] = useState({ show: false, message: '', severity: 'info' });
 
-    const availableTimes = lessons.filter(lesson =>
+
+    const availableLessons = lessons.filter(lesson =>
+        dayjs(lesson.date).isAfter(dayjs().startOf('day')) && !lesson.accepted
+    );
+
+    const availableTimes = availableLessons.filter(lesson =>
         dayjs(selectedDate).isSame(dayjs(lesson.date), 'day')
     );
 
     const disablePastAndUnavailableDates = (date) => {
-        const today = dayjs().startOf('day');
-        const dateIsPast = dayjs(date).isBefore(today);
-        const dateHasLessons = lessons.some(lesson =>
+        return dayjs(date).isBefore(dayjs().startOf('day')) || !availableLessons.some(lesson =>
             dayjs(date).isSame(dayjs(lesson.date), 'day')
         );
-        return dateIsPast || !dateHasLessons;
     };
 
-    const handleTimeSelection = (time) => {
-        const newSelectedTime = dayjs(time.date + 'T' + time.startTime).toISOString();
-        setSelectedTime(newSelectedTime === selectedTime ? null : newSelectedTime);
-    };
-
-    const isTimeValid = () => {
-        return selectedTime && availableTimes.some(time =>
-            dayjs(selectedTime).isSame(dayjs(time.date + 'T' + time.startTime), 'minute')
-        );
+    const handleTimeSelection = (lesson) => {
+        setSelectedTime(lesson.date);
+        setSelectedSubject(null);
     };
 
     const handleConfirm = () => {
-        if (selectedTime && selectedSubject && isTimeValid()) {
-            setTimeout(() => {
-                setAlertInfo({
-                    show: true,
-                    message: `You have send request for the lesson on: ${dayjs(selectedTime).format('YYYY-MM-DD HH:mm')} for ${selectedSubject}`,
-                    severity: 'success'
-                });
-            }, 500);
-            handleClose();
+        const subject = tutorSubjects.find(sub => sub.name === selectedSubject);
+        if (selectedTime && subject) {
+            const lessonConfirmation = {
+                date: selectedTime,
+                studentId: studentId,
+                tutorId: tutorId,
+                subjectId: subject.id,
+                accepted: false
+            };
+            console.log('Confirmed Lesson:', lessonConfirmation);
+            setAlertInfo({
+                show: true,
+                message: `You have sent the request for lesson on ${dayjs(selectedTime).format('YYYY-MM-DD HH:mm')}`,
+                severity: 'success'
+            });
+            setTimeout(handleClose, 500);
         } else {
-            setTimeout(() => {
-                setAlertInfo({
-                    show: true,
-                    message: 'Please select a valid date, time, and subject.',
-                    severity: 'error'
-                });
-            }, 500);
+            setAlertInfo({
+                show: true,
+                message: 'Please select a valid date, time, and subject.',
+                severity: 'error'
+            });
         }
     };
 
     const handleClose = () => {
-        onClose(); // Perform necessary cleanup
+        onClose();
         setSelectedDate(null);
         setSelectedTime(null);
         setSelectedSubject(null);
@@ -86,7 +87,7 @@ const LessonDialog = ({open, onClose, lessons, tutorSubjects}) => {
                         top: 8,
                         color: (theme) => theme.palette.grey[500]
                     }}>
-                        <CloseIcon/>
+                        <CloseIcon />
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
@@ -94,29 +95,23 @@ const LessonDialog = ({open, onClose, lessons, tutorSubjects}) => {
                         {selectedDate && !selectedTime ? (
                             <List component="nav" aria-label="available times">
                                 {availableTimes.map((lesson, index) => (
-                                    <ListItem button key={index}
-                                              selected={selectedTime === dayjs(lesson.date + 'T' + lesson.startTime).toISOString()}
-                                              onClick={() => handleTimeSelection(lesson)}>
-                                        <ListItemText primary={`${lesson.startTime} - ${lesson.endTime}`}/>
+                                    <ListItem button key={index} onClick={() => handleTimeSelection(lesson)}>
+                                        <ListItemText primary={`${dayjs(lesson.date).format('HH:mm')} - ${dayjs(lesson.date).add(1, 'hour').format('HH:mm')}`} />
                                     </ListItem>
                                 ))}
                             </List>
-                        ) : selectedTime ? (
+                        ) : selectedTime && !selectedSubject ? (
                             <List component="nav" aria-label="select subject">
                                 {tutorSubjects.map(subject => (
-                                    <ListItem button key={subject.id} selected={selectedSubject === subject.name}
-                                              onClick={() => setSelectedSubject(subject.name)}>
-                                        <ListItemText primary={subject.name}/>
+                                    <ListItem button key={subject.id} onClick={() => setSelectedSubject(subject.name)}>
+                                        <ListItemText primary={subject.name} />
                                     </ListItem>
                                 ))}
                             </List>
                         ) : (
                             <StaticDatePicker displayStaticWrapperAs="desktop" openTo="day" value={selectedDate}
-                                              onChange={setSelectedDate}
-                                              shouldDisableDate={disablePastAndUnavailableDates}
-                                              minDate={dayjs().startOf('year')}
-                                              maxDate={dayjs().add(1, 'year').endOf('year')} ampm={false}
-                                              showToolbar={false}/>
+                                              onChange={setSelectedDate} shouldDisableDate={disablePastAndUnavailableDates}
+                                              minDate={dayjs().startOf('year')} maxDate={dayjs().add(1, 'year').endOf('year')} />
                         )}
                     </LocalizationProvider>
                 </DialogContent>
@@ -131,16 +126,16 @@ const LessonDialog = ({open, onClose, lessons, tutorSubjects}) => {
                             Change Time
                         </Button>
                     )}
-                    <Button onClick={handleConfirm} disabled={!isTimeValid() || !selectedSubject}>
+                    <Button onClick={handleConfirm} disabled={!selectedTime || !selectedSubject}>
                         Confirm the selected time and subject
                     </Button>
                 </DialogActions>
             </Dialog>
             <Snackbar open={alertInfo.show} autoHideDuration={6000}
-                      anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-                      onClose={() => setAlertInfo({show: false, message: '', severity: 'info'})}>
-                <Alert onClose={() => setAlertInfo({show: false, message: '', severity: 'info'})}
-                       severity={alertInfo.severity} variant="filled" sx={{width: '100%'}}>
+                      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                      onClose={() => setAlertInfo({ show: false, message: '', severity: 'info' })}>
+                <Alert onClose={() => setAlertInfo({ show: false, message: '', severity: 'info' })}
+                       severity={alertInfo.severity} variant="filled" sx={{ width: '100%' }}>
                     {alertInfo.message}
                 </Alert>
             </Snackbar>

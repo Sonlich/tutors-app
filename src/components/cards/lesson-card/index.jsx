@@ -31,7 +31,7 @@ const LessonCard = ({lesson, onAccept, onCancel, showAcceptButton}) => {
                 }}>
                     <Typography variant="h6" sx={{textAlign: 'center', flex: 1}}>
                         <PersonIcon fontSize="inherit" sx={{verticalAlign: "middle", mr: 0.5}}/>
-                        Student <br/>
+                        {lesson.role.charAt(0).toUpperCase() + lesson.role.slice(1)} <br/>
                         {lesson.studentName} {lesson.age} years
                     </Typography>
                     <Typography color="textSecondary" sx={{textAlign: 'center'}}>

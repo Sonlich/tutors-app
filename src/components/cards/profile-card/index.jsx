@@ -25,7 +25,7 @@ const ProfileCard = ({user}) => {
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
     const handleConfirmDeletion = () => {
-        // onDelete(user.id);
+        onDelete(user.id);
         handleCloseModal();
     };
 
@@ -39,7 +39,7 @@ const ProfileCard = ({user}) => {
                 <Card>
                     <CardContent>
                         <Avatar src={user.photo} sx={{width: 100, height: 100, mb: 2}}/>
-                        <Typography variant="h5">{user.firstName} {user.lastName}</Typography>
+                        <Typography variant="h5" sx={{mb:1 }}>{user.firstName} {user.lastName}</Typography>
                         <Typography variant="body1" color="text.secondary">{user.description}</Typography>
                         <Typography variant="body2" color="text.secondary">
                             <TodayIcon fontSize="inherit" sx={{verticalAlign: "middle", mr: 0.5}}/>

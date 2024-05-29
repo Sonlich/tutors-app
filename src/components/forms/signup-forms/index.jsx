@@ -66,7 +66,10 @@ export const RegistrationForm = () => {
         ).when('role', (role, schema) => role === 'tutor' ? schema.required() : schema.notRequired())
     });
 
-    const availableSubjects = ["Mathematics", "English", "Chemistry"];
+    const availableSubjects =  [
+        "Mathematics", "Physics", "English", "German", "Chemistry", "Biology", "History",
+        "Geography", "Computer Science", "Economics", "Business Studies", "Accounting",
+    ];
 
     const isSubjectAdded = (selectedSubjects, currentSubject) => {
         return selectedSubjects.includes(currentSubject);

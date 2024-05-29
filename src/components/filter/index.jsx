@@ -31,7 +31,7 @@ export const DefaultFilter = ({setCriteria}) => {
     };
 
     const handleApplyFilter = () => {
-        setCriteria(filter);
+        setCriteria(prev => ({...prev, ...filter}));
     };
 
     const handleResetFilter = () => {

@@ -17,7 +17,7 @@ export const ProfilePages = () => {
 }
 
 const ProfilePage = () => {
-    const userId = 1;
+    const userId = 8;
     const [user, setUser] = useState(null);
 
     useEffect(() => {

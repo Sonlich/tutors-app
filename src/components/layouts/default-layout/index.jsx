@@ -7,10 +7,13 @@ import Button from '@mui/material/Button';
 import CastForEducationIcon from '@mui/icons-material/CastForEducation';
 import {Avatar, Box, IconButton, Menu, MenuItem, Tooltip} from "@mui/material";
 import {NavLink} from "react-router-dom";
+import { users } from '../../../mockData.js'
 
 function DefaultLayout() {
-    const [isUserAuthorized, setIsUserAuthorized] = React.useState();
+    const [isUserAuthorized, setIsUserAuthorized] = React.useState(true);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    const user = users.find(user => user.id === 13);
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -46,7 +49,7 @@ function DefaultLayout() {
                         <Box sx={{ml: 'auto', mr: 6}}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"/>
+                                    <Avatar alt={user.firstName} src={user.photo} />
                                 </IconButton>
                             </Tooltip>
                             <Menu
@@ -65,10 +68,13 @@ function DefaultLayout() {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                <MenuItem onClick={handleCloseUserMenu}>
-                                    <Typography color="inherit" textAlign="center" component={NavLink} to="/schedule"
-                                                sx={{textDecoration: 'none'}}>Schedule</Typography>
-                                </MenuItem>
+                                {user.role === 'tutor' && (
+                                    <MenuItem onClick={handleCloseUserMenu}>
+                                        <Typography color="inherit" textAlign="center" component={NavLink} to="/schedule"
+                                                    sx={{textDecoration: 'none'}}>Schedule</Typography>
+                                    </MenuItem>
+                                )
+                                }
                                 <MenuItem onClick={handleCloseUserMenu}>
                                     <Typography color="inherit" textAlign="center" component={NavLink} to="/lessons"
                                                 sx={{textDecoration: 'none'}}>Lessons</Typography>
