@@ -10,19 +10,20 @@ import {
     List,
     ListItem,
     ListItemText,
-    Snackbar
+    Snackbar,
+    Box
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, StaticDatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 
-const LessonDialog = ({ open, onClose, lessons, tutorSubjects, studentId = 8, tutorId}) => {
+const LessonDialog = ({ open, onClose, lessons, tutorSubjects, studentId = 8, tutorId }) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [selectedSubject, setSelectedSubject] = useState(null);
+    const [step, setStep] = useState(1);
     const [alertInfo, setAlertInfo] = useState({ show: false, message: '', severity: 'info' });
-
 
     const availableLessons = lessons.filter(lesson =>
         dayjs(lesson.date).isAfter(dayjs().startOf('day')) && !lesson.accepted
@@ -39,13 +40,28 @@ const LessonDialog = ({ open, onClose, lessons, tutorSubjects, studentId = 8, tu
     };
 
     const handleTimeSelection = (lesson) => {
-        setSelectedTime(lesson.date);
-        setSelectedSubject(null);
+        setSelectedTime(prevSelectedTime => prevSelectedTime === lesson.date ? null : lesson.date);
     };
 
-    const handleConfirm = () => {
-        const subject = tutorSubjects.find(sub => sub.name === selectedSubject);
-        if (selectedTime && subject) {
+    const handleSubjectSelection = (subjectName) => {
+        setSelectedSubject(prevSelectedSubject => prevSelectedSubject === subjectName ? null : subjectName);
+    };
+
+    const handleConfirmDate = () => {
+        if (selectedDate) {
+            setStep(2);
+        }
+    };
+
+    const handleConfirmTime = () => {
+        if (selectedTime) {
+            setStep(3);
+        }
+    };
+
+    const handleConfirmSubject = () => {
+        if (selectedSubject) {
+            const subject = tutorSubjects.find(sub => sub.name === selectedSubject);
             const lessonConfirmation = {
                 date: selectedTime,
                 studentId: studentId,
@@ -63,7 +79,7 @@ const LessonDialog = ({ open, onClose, lessons, tutorSubjects, studentId = 8, tu
         } else {
             setAlertInfo({
                 show: true,
-                message: 'Please select a valid date, time, and subject.',
+                message: 'Please select a subject.',
                 severity: 'error'
             });
         }
@@ -74,11 +90,12 @@ const LessonDialog = ({ open, onClose, lessons, tutorSubjects, studentId = 8, tu
         setSelectedDate(null);
         setSelectedTime(null);
         setSelectedSubject(null);
+        setStep(1);
     };
 
     return (
         <>
-            <Dialog open={open} onClose={handleClose} aria-labelledby="lesson-dialog-title">
+            <Dialog open={open} onClose={handleClose} aria-labelledby="lesson-dialog-title" maxWidth="xs" fullWidth>
                 <DialogTitle id="lesson-dialog-title">
                     Sign up for a lesson
                     <IconButton aria-label="close" onClick={handleClose} sx={{
@@ -91,44 +108,80 @@ const LessonDialog = ({ open, onClose, lessons, tutorSubjects, studentId = 8, tu
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        {selectedDate && !selectedTime ? (
-                            <List component="nav" aria-label="available times">
-                                {availableTimes.map((lesson, index) => (
-                                    <ListItem button key={index} onClick={() => handleTimeSelection(lesson)}>
-                                        <ListItemText primary={`${dayjs(lesson.date).format('HH:mm')} - ${dayjs(lesson.date).add(1, 'hour').format('HH:mm')}`} />
-                                    </ListItem>
-                                ))}
-                            </List>
-                        ) : selectedTime && !selectedSubject ? (
-                            <List component="nav" aria-label="select subject">
-                                {tutorSubjects.map(subject => (
-                                    <ListItem button key={subject.id} onClick={() => setSelectedSubject(subject.name)}>
-                                        <ListItemText primary={subject.name} />
-                                    </ListItem>
-                                ))}
-                            </List>
-                        ) : (
-                            <StaticDatePicker displayStaticWrapperAs="desktop" openTo="day" value={selectedDate}
-                                              onChange={setSelectedDate} shouldDisableDate={disablePastAndUnavailableDates}
-                                              minDate={dayjs().startOf('year')} maxDate={dayjs().add(1, 'year').endOf('year')} />
-                        )}
-                    </LocalizationProvider>
+                    <Box minHeight="350px"> {/* Ensure consistent height */}
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            {step === 1 && (
+                                <StaticDatePicker
+                                    displayStaticWrapperAs="desktop"
+                                    openTo="day"
+                                    value={selectedDate}
+                                    onChange={setSelectedDate}
+                                    shouldDisableDate={disablePastAndUnavailableDates}
+                                    minDate={dayjs().startOf('year')}
+                                    maxDate={dayjs().add(1, 'year').endOf('year')}
+                                />
+                            )}
+                            {step === 2 && (
+                                <List component="nav" aria-label="available times">
+                                    {availableTimes.map((lesson, index) => (
+                                        <ListItem
+                                            button
+                                            key={index}
+                                            onClick={() => handleTimeSelection(lesson)}
+                                            sx={{
+                                                backgroundColor: selectedTime === lesson.date ? 'grey.300' : 'transparent'
+                                            }}
+                                        >
+                                            <ListItemText primary={`${dayjs(lesson.date).format('HH:mm')} - ${dayjs(lesson.date).add(1, 'hour').format('HH:mm')}`} />
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            )}
+                            {step === 3 && (
+                                <List component="nav" aria-label="select subject">
+                                    {tutorSubjects.map(subject => (
+                                        <ListItem
+                                            button
+                                            key={subject.id}
+                                            onClick={() => handleSubjectSelection(subject.name)}
+                                            sx={{
+                                                backgroundColor: selectedSubject === subject.name ? 'grey.300' : 'transparent'
+                                            }}
+                                        >
+                                            <ListItemText primary={subject.name} />
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            )}
+                        </LocalizationProvider>
+                    </Box>
                 </DialogContent>
                 <DialogActions>
-                    {selectedDate && !selectedTime && (
-                        <Button onClick={() => setSelectedDate(null)} color="primary">
-                            Change Date
+                    {step === 1 && (
+                        <Button onClick={handleConfirmDate} color="primary" disabled={!selectedDate}>
+                            Confirm Date
                         </Button>
                     )}
-                    {selectedTime && (
-                        <Button onClick={() => setSelectedTime(null)} color="primary">
-                            Change Time
-                        </Button>
+                    {step === 2 && (
+                        <>
+                            <Button onClick={() => setStep(1)} color="primary">
+                                Change Date
+                            </Button>
+                            <Button onClick={handleConfirmTime} color="primary" disabled={!selectedTime}>
+                                Confirm Time
+                            </Button>
+                        </>
                     )}
-                    <Button onClick={handleConfirm} disabled={!selectedTime || !selectedSubject}>
-                        Confirm the selected time and subject
-                    </Button>
+                    {step === 3 && (
+                        <>
+                            <Button onClick={() => setStep(2)} color="primary">
+                                Change Time
+                            </Button>
+                            <Button onClick={handleConfirmSubject} color="primary" disabled={!selectedSubject}>
+                                Confirm Subject
+                            </Button>
+                        </>
+                    )}
                 </DialogActions>
             </Dialog>
             <Snackbar open={alertInfo.show} autoHideDuration={6000}
