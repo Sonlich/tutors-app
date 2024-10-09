@@ -6,7 +6,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import LessonDialog from "./modal";
 import dayjs from 'dayjs';
 
-export const TutorCard = ({tutor}) => {
+export const TutorCard = ({tutor, subjects, lessons}) => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => setOpen(true);
@@ -31,7 +31,7 @@ export const TutorCard = ({tutor}) => {
                     Age: {age}
                 </Typography>
                 <Container sx={{mt: 2, maxHeight: 120, overflow: 'auto'}}>
-                    {tutor.tutorSubject.map((subject) => (
+                    {subjects.filter(subject => subject.tutorId === tutor.id).map((subject) => (
                         <React.Fragment key={subject.id}>
                                 <Typography variant="body1" color="text.secondary" sx={{mt: 1}}>
                                     <ClassIcon fontSize="inherit" sx={{verticalAlign: "middle", mr: 0.5}}/>
@@ -57,7 +57,7 @@ export const TutorCard = ({tutor}) => {
                     Sign up for a lesson
                 </Button>
             </CardContent>
-            <LessonDialog open={open} onClose={handleClose} lessons={tutor.lessons} tutorSubjects={tutor.tutorSubject} tutorId={tutor.id}/>
+            <LessonDialog open={open} onClose={handleClose} lessons={lessons}  subjects={subjects} tutorId={tutor.id}/>
         </Card>
-    )
+        )
 }

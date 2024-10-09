@@ -1,494 +1,115 @@
-export const users = [
-    {
-        id: 1,
-        role: 'tutor',
-        firstName: 'Sofiia',
-        lastName: 'Zaika',
-        photo: 'https://img.freepik.com/free-photo/stylish-confident-businesswoman-smiling_176420-19466.jpg?t=st=1716652370~exp=1716655970~hmac=6327df004d3cae6cd7c2ca6754ef10f393d4f6d8d7c0cd099b2fced1a33f8f1f&w=1380',
-        description: 'User description',
-        birthDate: '1991-07-28',
-        email: 'sofiazaika1@example.com',
-        contact: '+38096573839',
-        tutorSubject: [
-            {
-                id: 1,
-                tutorId: 1,
-                name: 'Mathematics',
-                pricePerLesson: 450,
-                experienceSince: '2017-10-22',
-            },
-            {
-                id: 2,
-                tutorId: 1,
-                name: 'Physics',
-                pricePerLesson: 300,
-                experienceSince: '2018-09-23',
-            }
-        ],
-        lessons: [
-            {id: 1, date: '2024-05-29T10:00', studentId: null, tutorId: 1, accepted: false, subjectId: null},
-            {id: 2, date: '2024-05-30T12:00', studentId: null, tutorId: 1, accepted: false, subjectId: null},
-            {id: 3, date: '2024-05-29T10:00', studentId: 8, tutorId: 1, accepted: true, subjectId: 1},
-            {id: 4, date: '2024-05-30T12:00', studentId: 8, tutorId: 1, accepted: false, subjectId: 2},
-            {id: 22, date: '2024-06-01T09:00', studentId: 8, tutorId: 1, accepted: true, subjectId: 1},
-            {id: 23, date: '2024-06-02T13:00', studentId: 8, tutorId: 1, accepted: false, subjectId: 2},
-        ],
-    },
-    {
-        id: 2,
-        role: 'tutor',
-        firstName: 'Oleksandra',
-        lastName: 'Dercach',
-        photo: 'https://img.freepik.com/free-photo/portrait-young-beautiful-businesswoman-smiling_176420-9906.jpg?w=1380&t=st=1716652703~exp=1716653303~hmac=15c514ad605fcf35be6b20c52da09c1bfa2538e2c8c00941db62cdb7e917b0df',
-        description: 'User description',
-        birthDate: '1996-04-07',
-        email: 'olekder1@example.com',
-        contact: '+38096573839',
-        tutorSubject: [
-            {
-                id: 3,
-                tutorId: 2,
-                name: 'English',
-                pricePerLesson: 400,
-                experienceSince: '2018-11-21',
-            },
-            {
-                id: 4,
-                tutorId: 2,
-                name: 'German',
-                pricePerLesson: 500,
-                experienceSince: '2022-03-11',
-            }
-        ],
-        lessons: [
-            {id: 5, date: '2024-05-27T12:00', studentId: null, tutorId: 2, accepted: false, subjectId: null},
-            {id: 6, date: '2024-05-28T13:00', studentId: null, tutorId: 2, accepted: false, subjectId: null},
-            {id: 7, date: '2024-05-28T12:00', studentId: null, tutorId: 2, accepted: false, subjectId: null}
-        ],
-    },
-    {
-        id: 3,
-        role: 'tutor',
-        firstName: 'Oleg',
-        lastName: 'Kovalenko',
-        photo: 'https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg?w=1380&t=st=1716652413~exp=1716653013~hmac=33fb6c414d5da9bb1edf45ae7cfd01a94547334e6a7780ca05e6fccd0e87da6b',
-        description: 'User description',
-        birthDate: '1995-12-15',
-        email: 'olegkov@example.com',
-        contact: '+38096573839',
-        tutorSubject: [
-            {
-                id: 5,
-                tutorId: 3,
-                name: 'Biology',
-                pricePerLesson: 350,
-                experienceSince: '2019-08-12',
-            },
-            {
-                id: 6,
-                tutorId: 3,
-                name: 'Chemistry',
-                pricePerLesson: 400,
-                experienceSince: '2020-02-15',
-            }
-        ],
-        lessons: [
-            {id: 8, date: '2024-05-28T13:00', studentId: null, tutorId: 3, accepted: false, subjectId: null},
-            {id: 9, date: '2024-05-29T15:00', studentId: null, tutorId: 3, accepted: false, subjectId: null}
-        ],
-    },
-    {
-        id: 4,
-        role: 'tutor',
-        firstName: 'Olesya',
-        lastName: 'Bograch',
-        photo: 'https://img.freepik.com/free-photo/pleased-meet-with-new-team-portrait-friendly-looking-attractive-european-female-with-blond-hair-formal-blue-blouse-holding-hands-pockets-listening-customer-while-working-office_176420-25027.jpg?w=1380&t=st=1716652433~exp=1716653033~hmac=b244fa844d1b21d1bee2b40a1f788918ab458f3b8c4011bc82cad4d2f3e98b49',
-        description: 'User description',
-        birthDate: '1993-09-23',
-        email: 'olesbog@example.com',
-        contact: '+38096573839',
-        tutorSubject: [
-            {
-                id: 7,
-                tutorId: 4,
-                name: 'History',
-                pricePerLesson: 300,
-                experienceSince: '2018-10-22',
-            },
-            {
-                id: 8,
-                tutorId: 4,
-                name: 'Geography',
-                pricePerLesson: 350,
-                experienceSince: '2019-11-23',
-            }
-        ],
-        lessons: [
-            {id: 10, date: '2024-05-29T15:00', studentId: null, tutorId: 4, accepted: false, subjectId: null},
-            {id: 11, date: '2024-05-30T16:00', studentId: null, tutorId: 4, accepted: false, subjectId: null}
-        ],
-    },
-    {
-        id: 5,
-        role: 'tutor',
-        firstName: 'Mariia',
-        lastName: 'Primachenko',
-        photo: 'https://img.freepik.com/free-photo/pretty-smiling-joyfully-female-with-fair-hair-dressed-casually-looking-with-satisfaction_176420-15187.jpg?w=1380&t=st=1716652657~exp=1716653257~hmac=de174b899eef0473b68ee8ce14d48ec5f517bab2530bce8c7bdc237145755b7d',
-        description: 'User description',
-        birthDate: '1992-06-18',
-        email: 'mariaprim@example.com',
-        contact: '+38096573839',
-        tutorSubject: [
-            {
-                id: 9,
-                tutorId: 5,
-                name: 'Music',
-                pricePerLesson: 250,
-                experienceSince: '2017-09-22',
-            }
-        ],
-        lessons: [
-            {id: 12, date: '2024-05-29T09:00', studentId: null, tutorId: 5, accepted: false, subjectId: null},
-            {id: 13, date: '2024-05-30T14:00', studentId: null, tutorId: 5, accepted: false, subjectId: null},
-            {id: 14, date: '2024-05-30T11:00', studentId: null, tutorId: 5, accepted: false, subjectId: null}
-        ],
-    },
-    {
-        id: 6,
-        role: 'tutor',
-        firstName: 'Vladislav',
-        lastName: 'Bondarenko',
-        photo: 'https://img.freepik.com/free-photo/close-up-young-successful-man-smiling-camera-standing-casual-outfit-against-blue-background_1258-66609.jpg?w=1380&t=st=1716652461~exp=1716653061~hmac=d550eed04db5bfa15d783da076abce12261e9a958aaa43168db9aeac7270d7e1',
-        description: 'User description',
-        birthDate: '2002-03-12',
-        email: 'kilmai@example.com',
-        contact: '+38096573839',
-        tutorSubject: [
-            {
-                id: 11,
-                tutorId: 6,
-                name: 'Mathematics',
-                pricePerLesson: 450,
-                experienceSince: '2017-10-22',
-            }
-        ],
-        lessons: [
-            {id: 15, date: '2024-05-08T18:00', studentId: null, tutorId: 6, accepted: false, subjectId: null},
-            {id: 16, date: '2024-05-09T19:00', studentId: null, tutorId: 6, accepted: false, subjectId: null}
-        ],
-    },
-    {
-        id: 7,
-        role: 'tutor',
-        firstName: 'Katerina',
-        lastName: 'Mischenko',
-        photo: 'https://img.freepik.com/free-photo/happy-brunette-woman-with-short-hair-standing-confident-relaxed-pose-hands-jeans-pockets-smiling-pleased-studio_176420-41414.jpg?w=1380&t=st=1716652639~exp=1716653239~hmac=340fc9d383e70c923d17967b38719cf5044f85caa230d155d86adc8752290ea5',
-        description: 'User description',
-        birthDate: '1990-04-07',
-        email: 'sagaj@example.com',
-        contact: '+38096573839',
-        tutorSubject: [
-            {
-                id: 12,
-                tutorId: 7,
-                name: 'English',
-                pricePerLesson: 400,
-                experienceSince: '2018-11-21',
-            }
-        ],
-        lessons: [
-            {id: 17, date: '2024-06-02T20:00', studentId: null, tutorId: 7, accepted: false, subjectId: null},
-            {id: 18, date: '2024-06-03T21:00', studentId: null, tutorId: 7, accepted: false, subjectId: null},
-            {id: 19,date: '2024-06-03T21:00', studentId: null, tutorId: 7, accepted: false, subjectId: null}
-        ],
-    },
-    {
-        id: 8,
-        role: 'student',
-        firstName: 'Ivan',
-        lastName: 'Nagornui',
-        photo: null,
-        description: '',
-        birthDate: '1995-12-15',
-        email: 'ivannag@mail.com',
-        contact: '+38096573839',
-        lessons: [
-            {id: 20, date: '2024-05-29T10:00', studentId: 8, tutorId: 1, accepted: true, subjectId: 1},
-            {id: 21, date: '2024-05-30T12:00', studentId: 8, tutorId: 1, accepted: false, subjectId: 2},
-            { id: 127, date: '2024-05-29T17:00', studentId: 8, tutorId: 13, subjectId: 15, accepted: false },
-            { id: 128, date: '2024-06-05T17:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 129, date: '2024-06-12T17:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 130, date: '2024-06-19T17:00', studentId: 8, tutorId: 13, subjectId: 15, accepted: false },
-            { id: 131, date: '2024-05-29T18:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 132, date: '2024-06-05T18:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 133, date: '2024-06-12T18:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 134, date: '2024-06-19T18:00', studentId: 8, tutorId: 13, subjectId: 16, accepted: false },
-            { id: 135, date: '2024-05-29T19:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 136, date: '2024-06-05T19:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 137, date: '2024-06-12T19:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 138, date: '2024-06-19T19:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 139, date: '2024-05-29T20:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 140, date: '2024-06-05T20:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 141, date: '2024-06-12T20:00', studentId: 8, tutorId: 13, subjectId: 16, accepted: false },
-        ],
-    },
+import { faker } from '@faker-js/faker';
 
-    {
-        id: 9,
-        role: 'tutor',
-        firstName: 'Bogdan',
-        lastName: 'Naumenko',
-        photo: 'https://img.freepik.com/free-photo/expressive-redhead-guy-beige-shirt_176420-32329.jpg?w=1380&t=st=1716652476~exp=1716653076~hmac=00a3d903afe8fdc03b71ba34b4f13925813a0b8e9666b135bdc153a2fad640b1',
-        description: 'User description',
-        birthDate: '1990-04-07',
-        email: 'bogdannaum@example.com',
-        contact: '+3809454539',
-        tutorSubject: [
-            {
-                id: 13,
-                tutorId: 9,
-                name: 'German',
-                pricePerLesson: 400,
-                experienceSince: '2018-11-21',
-            }
-        ],
-        lessons: [
-            {id: 24, date: '2024-06-09T20:00', studentId: null, tutorId: 7, accepted: false, subjectId: null},
-            {id: 25, date: '2024-06-08T21:00', studentId: null, tutorId: 7, accepted: false, subjectId: null},
-            {id: 26,date: '2024-06-02T21:00', studentId: null, tutorId: 7, accepted: false, subjectId: null},
-            {id: 27, date: '2024-06-03T21:00', studentId: null, tutorId: 9, accepted: false, subjectId: null},
-            {id: 28, date: '2024-06-04T21:00', studentId: null, tutorId: 9, accepted: false, subjectId: null},
-        ],
-    },
-    {
-        id: 10,
-        role: 'tutor',
-        firstName: 'Alla',
-        lastName: 'Volkova',
-        photo: 'https://img.freepik.com/free-photo/young-confident-blond-girl-with-long-natural-hair-cross-arms-chest-smiling-determined-standing-like-professional-standing-white-wall_176420-38704.jpg?w=1380&t=st=1716652547~exp=1716653147~hmac=bb32ad9d68c48ebca21c87eef5c7f0e1ef3796e77322256519fb0613b88868f4',
-        description: 'User description',
-        birthDate: '1990-04-07',
-        email: 'allavol@example.com',
-        contact: '+3809454539',
-        tutorSubject: [
-            {
-                id: 14,
-                tutorId: 10,
-                name: 'History',
-                pricePerLesson: 300,
-                experienceSince: '2018-11-21',
-            }
-        ],
-        lessons: [
-            {id: 29, date: '2024-06-09T20:00', studentId: null, tutorId: 10, accepted: false, subjectId: null},
-            {id: 30, date: '2024-06-08T21:00', studentId: null, tutorId: 10, accepted: false, subjectId: null},
-            {id: 31,date: '2024-06-02T21:00', studentId: null, tutorId: 10, accepted: false, subjectId: null},
-            {id: 32, date: '2024-06-03T21:00', studentId: null, tutorId: 10, accepted: false, subjectId: null},
-            {id: 33, date: '2024-06-04T21:00', studentId: null, tutorId: 10, accepted: false, subjectId: null},
-        ],
-    },
-    {
-        id: 11,
-        role: 'tutor',
-        firstName: 'Maks',
-        lastName: 'Kidryk',
-        photo: 'https://img.freepik.com/free-photo/confident-handsome-guy-posing-against-white-wall_176420-32936.jpg?w=1380&t=st=1716652563~exp=1716653163~hmac=3be473b477dd1b5c37b528ac8582946410c5b41c1c10464347cf7e91e38fc2ed',
-        description: 'User description',
-        birthDate: '1990-04-07',
-        email: 'makskid@example.com',
-        contact: '+3809454539',
-        tutorSubject: [
-            {
-                id: 15,
-                tutorId: 11,
-                name: 'History',
-                pricePerLesson: 350,
-                experienceSince: '2019-12-22',
-            },
-            {
-                id: 16,
-                tutorId: 11,
-                name: 'Geography',
-                pricePerLesson: 300,
-                experienceSince: '2020-11-22',
-            }
-        ],
-        lessons: [
-            {id: 34, date: '2024-06-09T20:00', studentId: null, tutorId: 11, accepted: false, subjectId: null},
-            {id: 35, date: '2024-06-08T21:00', studentId: null, tutorId: 11, accepted: false, subjectId: null},
-            {id: 36,date: '2024-06-02T21:00', studentId: null, tutorId: 11, accepted: false, subjectId: null},
-            {id: 37, date: '2024-06-03T21:00', studentId: null, tutorId: 11, accepted: false, subjectId: null},
-            {id: 38, date: '2024-06-04T21:00', studentId: null, tutorId: 11, accepted: false, subjectId: null},
-        ],
-    },
-    {
-        id: 12,
-        role: 'tutor',
-        firstName: 'Oleksiy',
-        lastName: 'Molubog',
-        photo: 'https://img.freepik.com/free-photo/handsome-confident-smiling-man-with-hands-crossed-chest_176420-18743.jpg?w=1380&t=st=1716652582~exp=1716653182~hmac=a0099369d9ac5a2aecb6d8edbce2012fed53c17c8c17efb34ed14738826e5566',
-        description: 'User description',
-        birthDate: '1996-04-07',
-        email: 'oleksmol@example.com',
-        contact: '+3809454539',
-        tutorSubject: [
-            {
-                id: 14,
-                tutorId: 12,
-                name: 'Biology',
-                pricePerLesson: 280,
-                experienceSince: '2017-07-21',
-            }
-        ],
-        lessons: [
-            {id: 29, date: '2024-06-09T20:00', studentId: null, tutorId: 12, accepted: false, subjectId: null},
-            {id: 30, date: '2024-06-08T21:00', studentId: null, tutorId: 12, accepted: false, subjectId: null},
-            {id: 31,date: '2024-06-02T21:00', studentId: null, tutorId: 12, accepted: false, subjectId: null},
-            {id: 32, date: '2024-06-03T21:00', studentId: null, tutorId: 12, accepted: false, subjectId: null},
-            {id: 33, date: '2024-06-04T21:00', studentId: null, tutorId: 12, accepted: false, subjectId: null},
-        ],
-    },
-    {
-        id: 13,
-        role: 'tutor',
-        firstName: 'Igor',
-        lastName: 'Lagoda',
-        photo: 'https://img.freepik.com/free-photo/handsome-freelancer-man-holding-laptop-smiling-standing-happy-light-turquoise-wall_1258-23916.jpg?w=1380&t=st=1716652601~exp=1716653201~hmac=364a8852413178582a643ee7adf40dc947dc56008d8df0ac74fa6b06f3495896',
-        description: 'User description',
-        birthDate: '1997-05-14',
-        email: 'igorlag@example.com',
-        contact: '+380955458637',
-        tutorSubject: [
-            {
-                id: 15,
-                tutorId: 13,
-                name: 'Physics',
-                pricePerLesson: 250,
-                experienceSince: '2023-05-23',
-            },
-            {
-                id: 16,
-                tutorId: 13,
-                name: 'Economics',
-                pricePerLesson: 300,
-                experienceSince: '2021-01-23',
-            }
-        ],
-        lessons: [
-            {id: 34, date: '2024-06-09T20:00', studentId: null, tutorId: 13, accepted: false, subjectId: null},
-            {id: 35, date: '2024-09-02T21:00', studentId: null, tutorId: 13, accepted: false, subjectId: null},
-            {id: 36,date: '2024-06-02T21:00', studentId: null, tutorId: 13, accepted: false, subjectId: null},
-            {id: 37, date: '2024-06-03T21:00', studentId: null, tutorId: 13, accepted: false, subjectId: null},
-            {id: 38, date: '2024-06-04T21:00', studentId: null, tutorId: 13, accepted: false, subjectId: null},
-            { id: 39, date: '2024-05-26T09:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 40, date: '2024-06-02T09:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 41, date: '2024-06-09T09:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 42, date: '2024-06-16T09:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 43, date: '2024-05-26T10:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 44, date: '2024-06-02T10:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 45, date: '2024-06-09T10:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 46, date: '2024-06-16T10:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 47, date: '2024-05-26T11:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 48, date: '2024-06-02T11:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 49, date: '2024-06-09T11:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 50, date: '2024-06-16T11:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 51, date: '2024-05-26T12:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 52, date: '2024-06-02T12:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 53, date: '2024-06-09T12:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 54, date: '2024-06-16T12:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 55, date: '2024-05-26T13:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 56, date: '2024-06-02T13:00', studentId: 8, tutorId: 13, subjectId: 16, accepted: false },
-            { id: 57, date: '2024-06-09T13:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 58, date: '2024-06-16T13:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 59, date: '2024-05-26T14:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 60, date: '2024-06-02T14:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 61, date: '2024-06-09T14:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 62, date: '2024-06-16T14:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 63, date: '2024-05-26T15:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 64, date: '2024-06-02T15:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 65, date: '2024-06-09T15:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 66, date: '2024-06-16T15:00', studentId: 8, tutorId: 13, subjectId: 15, accepted: false },
-            { id: 67, date: '2024-05-26T16:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 68, date: '2024-06-02T16:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 69, date: '2024-06-09T16:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 70, date: '2024-06-16T16:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 71, date: '2024-05-26T17:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 72, date: '2024-06-02T17:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 73, date: '2024-06-09T17:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 74, date: '2024-06-16T17:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 75, date: '2024-05-27T09:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 76, date: '2024-06-03T09:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 77, date: '2024-06-10T09:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 78, date: '2024-06-17T09:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 79, date: '2024-05-27T10:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 80, date: '2024-06-03T10:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 81, date: '2024-06-10T10:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 82, date: '2024-06-17T10:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 83, date: '2024-05-27T11:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 84, date: '2024-06-03T11:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 85, date: '2024-06-10T11:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 86, date: '2024-06-17T11:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 87, date: '2024-05-27T12:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 88, date: '2024-06-03T12:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 89, date: '2024-06-10T12:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 90, date: '2024-06-17T12:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 91, date: '2024-05-27T13:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 92, date: '2024-06-03T13:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 93, date: '2024-06-10T13:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 94, date: '2024-06-17T13:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 95, date: '2024-05-27T14:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 96, date: '2024-06-03T14:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 97, date: '2024-06-10T14:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 98, date: '2024-06-17T14:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 99, date: '2024-05-28T10:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 100, date: '2024-06-04T10:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 101, date: '2024-06-11T10:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 102, date: '2024-06-18T10:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 103, date: '2024-05-28T11:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 104, date: '2024-06-04T11:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 105, date: '2024-06-11T11:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 106, date: '2024-06-18T11:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 107, date: '2024-05-28T12:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 108, date: '2024-06-04T12:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 109, date: '2024-06-11T12:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 110, date: '2024-06-18T12:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 111, date: '2024-07-28T13:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 112, date: '2024-07-04T13:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 113, date: '2024-07-11T13:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 114, date: '2024-07-18T13:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 115, date: '2024-07-28T14:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 116, date: '2024-07-04T14:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 117, date: '2024-07-11T14:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 118, date: '2024-07-18T14:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 119, date: '2024-07-29T15:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 120, date: '2024-07-05T15:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 121, date: '2024-07-12T15:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 122, date: '2024-07-19T15:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 123, date: '2024-08-29T16:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 124, date: '2024-08-05T16:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 125, date: '2024-08-12T16:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 126, date: '2024-08-19T16:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 127, date: '2024-08-29T17:00', studentId: 8, tutorId: 13, subjectId: 15, accepted: false },
-            { id: 128, date: '2024-08-05T17:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 129, date: '2024-08-12T17:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 130, date: '2024-08-19T17:00', studentId: 8, tutorId: 13, subjectId: 15, accepted: false },
-            { id: 131, date: '2024-08-29T18:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 132, date: '2024-08-05T18:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 133, date: '2024-08-12T18:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 134, date: '2024-08-19T18:00', studentId: 8, tutorId: 13, subjectId: 16, accepted: false },
-            { id: 135, date: '2024-08-29T19:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 136, date: '2024-08-05T19:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 137, date: '2024-08-12T19:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 138, date: '2024-08-19T19:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 139, date: '2024-08-29T20:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 140, date: '2024-08-05T20:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 141, date: '2024-08-12T20:00', studentId: 8, tutorId: 13, subjectId: 16, accepted: false },
-            { id: 142, date: '2024-07-19T20:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 143, date: '2024-07-23T09:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 144, date: '2024-07-24T09:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 145, date: '2024-07-25T09:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 146, date: '2024-07-26T09:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-            { id: 147, date: '2024-07-30T09:00', studentId: null, tutorId: 13, subjectId: null, accepted: false },
-        ],
-    },
+export const subjectNames = [
+    'Mathematics',
+    'Physics',
+    'English',
+    'German',
+    'Chemistry',
+    'Biology',
+    'History',
+    'Geography',
+    'Computer Science',
+    'Literature',
+    'Art',
+    'Music',
+    'Philosophy',
+    'Sociology',
+    'Psychology',
+    'Economics',
+    'Political Science',
+    'Environmental Science',
+    'Statistics',
+    'French',
+    'Spanish',
+    'Italian',
+    'Latin',
+    'Astronomy',
+    'Engineering',
+    'Law',
+    'Medicine',
+    'Architecture',
+    'Business Studies',
+    'Physical Education'
 ];
+
+const users = Array.from({ length: 30 }, (_, id) => {
+    const isTutor = faker.helpers.arrayElement(['tutor', 'student']) === 'tutor';
+    const birthDate = isTutor
+        ? faker.date.past({ years: 50, refDate: new Date(new Date().setFullYear(new Date().getFullYear() - 18)) }).toISOString().split('T')[0]
+        : faker.date.past({ years: 30 }).toISOString().split('T')[0];
+
+    return {
+        id: id + 1,
+        role: isTutor ? 'tutor' : 'student',
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
+        photo: faker.image.avatar(),
+        description: faker.lorem.sentence(),
+        password: faker.internet.password({ length: 20, memorable: true }),
+        birthDate,
+        email: faker.internet.email(),
+        contact: faker.phone.number(),
+    };
+});
+
+const tutors = users.filter(user => user.role === 'tutor').map(user => user.id);
+const students = users.filter(user => user.role === 'student').map(user => user.id);
+
+const assignedSubjects = {};
+
+const subjects = [];
+tutors.forEach(tutorId => {
+    const availableSubjects = subjectNames.filter(name =>
+        !assignedSubjects[tutorId]?.includes(name)
+    );
+    const subjectName = faker.helpers.arrayElement(availableSubjects);
+
+    if (!assignedSubjects[tutorId]) {
+        assignedSubjects[tutorId] = [];
+    }
+    assignedSubjects[tutorId].push(subjectName);
+
+    subjects.push({
+        id: subjects.length + 1,
+        tutorId,
+        name: subjectName,
+        pricePerLesson: faker.datatype.number({ min: 300, max: 900, precision: 10 }),
+        experienceSince: faker.date.past({ years: 10 }).toISOString().split('T')[0],
+    });
+});
+
+while (subjects.length < 40) {
+    const tutorId = faker.helpers.arrayElement(tutors);
+    const availableSubjects = subjectNames.filter(name =>
+        !assignedSubjects[tutorId]?.includes(name)
+    );
+    if (availableSubjects.length === 0) continue;
+
+    const subjectName = faker.helpers.arrayElement(availableSubjects);
+    assignedSubjects[tutorId].push(subjectName);
+
+    subjects.push({
+        id: subjects.length + 1,
+        tutorId,
+        name: subjectName,
+        pricePerLesson: faker.datatype.number({ min: 300, max: 900, precision: 10 }),
+        experienceSince: faker.date.past({ years: 10 }).toISOString().split('T')[0],
+    });
+}
+
+const lessons = Array.from({ length: 200 }, (_, id) => {
+    const date = faker.date.future({ years: 0.1 });
+    date.setMinutes(0, 0, 0);
+
+    return {
+        id: id + 1,
+        date: date.toISOString(),
+        studentId: faker.helpers.arrayElement([null, ...students]),
+        tutorId: faker.helpers.arrayElement(tutors),
+        accepted: faker.datatype.boolean(),
+        subjectId: faker.helpers.arrayElement(subjects.map(subject => subject.id)),
+    };
+});
+
+export { users, lessons, subjects };

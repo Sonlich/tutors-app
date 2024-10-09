@@ -18,6 +18,7 @@ export const Pages = () => {
                 <Route path='lessons' element={<LessonsPage/>}/>
                 <Route path='schedule' element={<SchedulePage/>}/>
                 <Route path='profile/*' element={<ProfilePages/>}/>
+                {/*<Route path='logout' element={<HomePage/>}/>*/}
                 <Route path='*' element={<div>Not Found</div>}/>
             </Routes>
         </div>

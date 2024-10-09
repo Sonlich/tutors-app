@@ -10,61 +10,14 @@ import {enUS} from 'date-fns/locale';
 import dayjs from "dayjs";
 
 const descriptionSchema = yup.string()
-    .max(200, 'Description must be at most 200 characters')
+    .max(200, 'Description must be at most 200 characters');
 
-
-export const EditProfileForm = () => {
-    let user = {
-        id: 13,
-        role: 'tutor',
-        firstName: 'Igor',
-        lastName: 'Lagoda',
-        photo: 'https://img.freepik.com/free-photo/handsome-freelancer-man-holding-laptop-smiling-standing-happy-light-turquoise-wall_1258-23916.jpg?w=1380&t=st=1716652601~exp=1716653201~hmac=364a8852413178582a643ee7adf40dc947dc56008d8df0ac74fa6b06f3495896',
-        description: 'User description',
-        birthDate: '1997-05-14',
-        email: 'igorlag@example.com',
-        contact: '+380955458637',
-        password: 'password1',
-        subjects: [
-            {
-                id: 15,
-                name: 'Physics',
-                pricePerLesson: 250,
-                experienceSince: '2023-05-23',
-            },
-            {
-                id: 16,
-                name: 'Economics',
-                pricePerLesson: 300,
-                experienceSince: '2021-01-23',
-            }
-        ],
-        lessons: [
-            {id: 34, date: '2024-06-09T20:00', studentId: null, tutorId: 13, accepted: false, subjectId: null},
-            {id: 35, date: '2024-06-08T21:00', studentId: null, tutorId: 13, accepted: false, subjectId: null},
-            {id: 36,date: '2024-06-02T21:00', studentId: null, tutorId: 13, accepted: false, subjectId: null},
-            {id: 37, date: '2024-06-03T21:00', studentId: null, tutorId: 13, accepted: false, subjectId: null},
-            {id: 38, date: '2024-06-04T21:00', studentId: null, tutorId: 13, accepted: false, subjectId: null},
-        ],
-    }
-
-    const initialValues = {
-        role: user.role,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        profilePhoto: user.photo,
-        birthDate: user.birthDate,
-        description: user.description,
-        contact: user.contact,
-        email: user.email,
-        password: user.password,
-    };
-
+export const EditProfileForm = ({ user }) => {
     const registrationValidationSchema = yup.object({
         firstName: yup.string().required('First name is required'),
         lastName: yup.string().required('Last name is required'),
-        profilePhoto: initialValues.role === 'student' ? yup.mixed().nullable() : yup.mixed().required('Profile photo is required for tutors'),
-        description: initialValues.role === 'student' ? descriptionSchema : descriptionSchema.required('Description is required'),
+        photo: user.role === 'student' ? yup.mixed().nullable() : yup.mixed().required('Profile photo is required for tutors'),
+        description: user.role === 'student' ? descriptionSchema : descriptionSchema.required('Description is required'),
         birthDate: yup.date().max(new Date(), "Birth date must be in the past").required('Birth date is required'),
         contact: yup.string()
             .required('Contact is required')
@@ -84,12 +37,14 @@ export const EditProfileForm = () => {
             .required('New password is required'),
     });
 
-    const [photoPreview, setPhotoPreview] = useState(initialValues.profilePhoto);
+    const [photoPreview, setPhotoPreview] = useState(user.photo);
     const [isChangingPassword, setIsChangingPassword] = useState(false);
 
     const handlePasswordChangeClick = () => {
         setIsChangingPassword(!isChangingPassword);
     };
+
+    console.log(user)
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns} locale={enUS}>
@@ -101,7 +56,17 @@ export const EditProfileForm = () => {
                 mt: 6
             }}>
                 <Formik
-                    initialValues={initialValues}
+                    initialValues={{
+                        firstName: user.firstName || '',
+                        lastName: user.lastName || '',
+                        photo: user.photo || null,
+                        description: user.description || '',
+                        birthDate: user.birthDate || '',
+                        contact: user.contact || '',
+                        email: user.email || '',
+                        oldPassword: '',
+                        newPassword: '',
+                    }}
                     validationSchema={registrationValidationSchema}
                     enableReinitialize={true}
                     onSubmit={(values, {setSubmitting}) => {
@@ -123,13 +88,13 @@ export const EditProfileForm = () => {
                       }) => {
                         const handlePhotoChange = (event) => {
                             if (event.target.files[0]) {
-                                setFieldValue("profilePhoto", event.target.files[0]);
+                                setFieldValue("photo", event.target.files[0]);
                                 setPhotoPreview(URL.createObjectURL(event.target.files[0]));
                             }
                         };
 
                         const handleRemovePhoto = () => {
-                            setFieldValue("profilePhoto", null);
+                            setFieldValue("photo", null);
                             setPhotoPreview(null);
                         };
 
@@ -171,13 +136,13 @@ export const EditProfileForm = () => {
                                                     }}>
                                                         <input
                                                             accept="image/*"
-                                                            id="profilePhoto"
-                                                            name="profilePhoto"
+                                                            id="photo"
+                                                            name="photo"
                                                             type="file"
                                                             hidden
                                                             onChange={handlePhotoChange}
                                                         />
-                                                        <label htmlFor="profilePhoto">
+                                                        <label htmlFor="photo">
                                                             <Button variant="contained" component="span"
                                                                     sx={{
                                                                         mb: 2,
@@ -347,8 +312,7 @@ export const EditProfileForm = () => {
                                 </Grid>
                             </Form>
                         )
-                    }
-                    }
+                    }}
                 </Formik>
             </Container>
         </LocalizationProvider>

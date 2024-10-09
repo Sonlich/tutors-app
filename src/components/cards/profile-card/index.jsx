@@ -19,13 +19,13 @@ import dayjs from "dayjs";
 import ConfirmationDeletionDialog from "./modal";
 import {NavLink} from "react-router-dom";
 
-const ProfileCard = ({user}) => {
+const ProfileCard = ({user, subjects}) => {
     const [openModal, setOpenModal] = useState(false);
 
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
     const handleConfirmDeletion = () => {
-        onDelete(user.id);
+        // onDelete(user.id);
         handleCloseModal();
     };
 
@@ -58,7 +58,7 @@ const ProfileCard = ({user}) => {
                                 <Divider sx={{my: 2}}/>
                                 <Typography variant="h6">Subjects:</Typography>
                                 <List>
-                                    {user.tutorSubject.map(subject => (
+                                    {subjects.filter(subject => subject.tutorId === user.id).map((subject) => (
                                         <ListItem key={subject.id}>
                                             <ClassIcon fontSize="inherit" sx={{verticalAlign: "middle", mr: 0.5}}/>
                                             <ListItemText primary={subject.name}

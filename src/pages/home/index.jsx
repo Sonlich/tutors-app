@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styles from './styles.module.scss';
-import {users} from "../../mockData";
+import {users, subjects, lessons} from "../../mockData";
 import {TutorCard} from "../../components/cards/tutor-card";
 import {DefaultFilter} from "../../components/filter";
 import Pagination from '@mui/material/Pagination';
@@ -17,7 +17,10 @@ export const HomePage = () => {
     const [page, setPage] = useState(1);
     const tutorsPerPage = 6;
 
-    const tutors = users.filter(user => user.role === 'tutor' && applyCriteria(user, criteria));
+    const tutors = users.filter(user =>
+        user.role === 'tutor' && applyCriteria(user, subjects, lessons, criteria)
+    );
+
     const count = Math.ceil(tutors.length / tutorsPerPage);
     const displayedTutors = tutors.slice((page - 1) * tutorsPerPage, page * tutorsPerPage);
 
@@ -33,7 +36,7 @@ export const HomePage = () => {
                 </div>
                 <div className={styles.cards}>
                     {displayedTutors.map(tutor => (
-                        <TutorCard key={tutor.id} tutor={tutor}/>
+                        <TutorCard key={tutor.id} tutor={tutor} subjects={subjects} lessons={lessons}/>
                     ))}
                 </div>
             </div>
@@ -45,20 +48,29 @@ export const HomePage = () => {
 };
 
 
-function applyCriteria(tutor, criteria) {
-    let subjectMatch = criteria.subject ? tutor.tutorSubject.some(subject => subject.name === criteria.subject) : true;
+
+function applyCriteria(tutor, subjects, lessons, criteria) {
+    if (!tutor || !subjects || !lessons || !criteria) {
+        return false;
+    }
+
+    let subjectMatch = criteria.subject ? subjects.some(subject =>
+        subject.tutorId === tutor.id && subject.name === criteria.subject
+    ) : true;
+
     let priceMatch = true;
     if (criteria.minPrice || criteria.maxPrice) {
-        priceMatch = tutor.tutorSubject.every(subject => {
-            return (!criteria.minPrice || subject.pricePerLesson >= parseFloat(criteria.minPrice)) &&
-                (!criteria.maxPrice || subject.pricePerLesson <= parseFloat(criteria.maxPrice));
-        });
+        priceMatch = subjects.some(subject =>
+            subject.tutorId === tutor.id &&
+            (!criteria.minPrice || subject.pricePerLesson >= parseFloat(criteria.minPrice)) &&
+            (!criteria.maxPrice || subject.pricePerLesson <= parseFloat(criteria.maxPrice))
+        );
     }
 
     let timeSlotMatch = true;
     if (criteria.timeSlots && criteria.timeSlots.length) {
-        timeSlotMatch = tutor.lessons.some(lesson => {
-            if (lesson.accepted) {
+        timeSlotMatch = lessons.some(lesson => {
+            if (lesson.accepted || lesson.tutorId !== tutor.id) {
                 return false;
             }
             const lessonStart = new Date(lesson.date);
@@ -80,3 +92,4 @@ function applyCriteria(tutor, criteria) {
 
     return subjectMatch && priceMatch && timeSlotMatch;
 }
+

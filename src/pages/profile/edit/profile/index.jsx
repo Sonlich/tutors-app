@@ -1,9 +1,9 @@
 import {EditProfileForm} from "../../../../components/forms/edit-profile-forms";
 
-export const EditProfilePage = () => {
+export const EditProfilePage = ({user}) => {
     return (
         <div>
-            <EditProfileForm/>
+            <EditProfileForm user={user}/>
         </div>
     );
 };

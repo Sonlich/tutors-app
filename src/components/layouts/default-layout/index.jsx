@@ -13,7 +13,7 @@ function DefaultLayout() {
     const [isUserAuthorized, setIsUserAuthorized] = React.useState(true);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-    const user = users.find(user => user.id === 13);
+    const user = users.find(user => user.id === 8);
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -21,6 +21,13 @@ function DefaultLayout() {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const handleLogout = () => {
+        setTimeout(() => {
+            setIsUserAuthorized(false);
+            handleCloseUserMenu();
+        }, 1000);
     };
 
     return (
@@ -83,8 +90,8 @@ function DefaultLayout() {
                                     <Typography color="inherit" textAlign="center" component={NavLink} to="/profile"
                                                 sx={{textDecoration: 'none'}}>Profile</Typography>
                                 </MenuItem>
-                                <MenuItem onClick={handleCloseUserMenu}>
-                                    <Typography color="inherit" textAlign="center" component={NavLink} to="/logout"
+                                <MenuItem onClick={handleLogout}>
+                                    <Typography color="inherit" textAlign="center" component={NavLink} to="/"
                                                 sx={{textDecoration: 'none'}}>Logout</Typography>
                                 </MenuItem>
                             </Menu>

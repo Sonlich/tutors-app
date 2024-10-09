@@ -18,7 +18,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, StaticDatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 
-const LessonDialog = ({ open, onClose, lessons, tutorSubjects, studentId = 8, tutorId }) => {
+const LessonDialog = ({ open, onClose, lessons, subjects, studentId = 8, tutorId }) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [selectedSubject, setSelectedSubject] = useState(null);
@@ -61,7 +61,7 @@ const LessonDialog = ({ open, onClose, lessons, tutorSubjects, studentId = 8, tu
 
     const handleConfirmSubject = () => {
         if (selectedSubject) {
-            const subject = tutorSubjects.find(sub => sub.name === selectedSubject);
+            const subject = subjects.find(sub => sub.name === selectedSubject);
             const lessonConfirmation = {
                 date: selectedTime,
                 studentId: studentId,
@@ -108,7 +108,7 @@ const LessonDialog = ({ open, onClose, lessons, tutorSubjects, studentId = 8, tu
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    <Box minHeight="350px"> {/* Ensure consistent height */}
+                    <Box minHeight="350px">
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             {step === 1 && (
                                 <StaticDatePicker
@@ -139,7 +139,7 @@ const LessonDialog = ({ open, onClose, lessons, tutorSubjects, studentId = 8, tu
                             )}
                             {step === 3 && (
                                 <List component="nav" aria-label="select subject">
-                                    {tutorSubjects.map(subject => (
+                                    {subjects.filter(subject => subject.tutorId === tutorId).map((subject) => (
                                         <ListItem
                                             button
                                             key={subject.id}
